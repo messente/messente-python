@@ -23,6 +23,11 @@ ERROR_CODES = {
         "Parameters are wrong or missing.",
         "Check that all the required parameters are present.",
     ]),
+    "ERROR 103": " ".join([
+        "Invalid IP address.",
+        "The IP address you made the request from,",
+        "is not in the API whitelist settings.",
+    ]),
     "FAILED 209": " ".join([
         "Server failure, try again after a few seconds or",
         "try the backup server.",

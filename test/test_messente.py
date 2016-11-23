@@ -2,19 +2,24 @@ import unittest
 import messente
 
 
-class TestMessente(unittest.TestCase):
+class TestMessenteLibrary(unittest.TestCase):
     def test_invalid_config_path(self):
         with self.assertRaises(messente.api.error.ConfigurationError):
-            messente.Messente(ini_path="invalid-path.ini")
+            messente.Messente(
+                ini_path="invalid-path.ini",
+                api_url="https://test-messente.example.com"
+            )
 
-    def test_modules(self):
-        api = messente.Messente()
+    def test_modules_init(self):
+        api = messente.Messente(api_url="https://test.example.com")
         self.assertIsInstance(api.sms, messente.api.sms.SmsAPI)
-        self.assertIsInstance(api.credit, messente.api.credit.CreditsAPI)
+        self.assertIsInstance(api.credit, messente.api.credit.CreditAPI)
         self.assertIsInstance(api.delivery, messente.api.delivery.DeliveryAPI)
-        apis = [api.sms, api.credit, api.delivery]
+        self.assertIsInstance(api.pricing, messente.api.pricing.PricingAPI)
+        apis = [api.sms, api.credit, api.delivery, api.pricing]
         for item in apis:
             self.assertIsInstance(item, messente.api.api.API)
+        del api
 
     def test_error_messages(self):
         codes = messente.api.error.ERROR_CODES

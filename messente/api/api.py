@@ -8,20 +8,11 @@ from messente.api import config
 
 
 class API(Logger):
-    def __init__(self, **kwargs):
-        self._config_section = kwargs.pop("config_section", "default")
+    def __init__(self, config_section, **kwargs):
+        self._config_section = config_section
         for section in ["default", self._config_section]:
             if not config.configuration.has_section(section):
                 config.configuration.add_section(section)
-        self.set_option("api_url", kwargs.pop(
-            "api_url", os.getenv("MESSENTE_API_URL", "")
-        ))
-        self.set_option("username", kwargs.pop(
-            "username", os.getenv("MESSENTE_API_USERNAME", "")
-        ))
-        self.set_option("password", kwargs.pop(
-            "password", os.getenv("MESSENTE_API_PASSWORD", "")
-        ))
 
         if kwargs.get("ini_path", ""):
             config.load(kwargs.pop("ini_path"))
@@ -38,6 +29,17 @@ class API(Logger):
             log_format=self.get_option("log_format", None),
             log_file=self.get_option("log_file"),
         )
+        overrides = {
+            "api_url": "MESSENTE_API_URL",
+            "username": "MESSENTE_API_USERNAME",
+            "password": "MESSENTE_API_PASSWORD",
+        }
+
+        for item in overrides:
+            value = kwargs.pop(item, os.getenv(overrides[item], ""))
+            if value:
+                self.set_option(item, value)
+
         self.log.info("Initialized")
 
     def call_api(self, endpoint, method="GET", **data):
@@ -69,8 +71,7 @@ class API(Logger):
             self.log.exception(e)
 
     def set_option(self, option, value):
-        if value:
-            config.configuration[self._config_section][option] = value
+        config.configuration[self._config_section][option] = value
 
     def get_option(self, option, default=None, **kwargs):
         data_type = kwargs.pop("data_type", str)
@@ -90,3 +91,11 @@ class API(Logger):
 
     def get_bool_option(self, *args, **kwargs):
         return self.get_option(*args, data_type=bool, **kwargs)
+
+    def log_response(self, r):
+        if not r.is_replied():
+            self.log.critical("No response")
+        elif not r.is_ok():
+            self.log.error(r.get_full_error_msg())
+        else:
+            self.log.debug(r.get_raw_text())

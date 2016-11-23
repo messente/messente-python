@@ -5,7 +5,7 @@ from messente.api import sms
 
 class TestValidate(unittest.TestCase):
     def setUp(self):
-        self.api = sms.SmsAPI()
+        self.api = sms.SmsAPI(api_url="https://test-sms-validate.example.com")
         self.correct_data = {
             "to": "+37212345678",
             "text": "test",

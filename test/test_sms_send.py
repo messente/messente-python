@@ -8,13 +8,6 @@ from messente.api.error import ConfigurationError
 from messente.api.error import InvalidMessageError
 
 
-api = sms.SmsAPI(
-    user="test",
-    password="test",
-    api_url=utils.TEST_URL,
-)
-
-
 def mk_sms_data(data=None):
     sms_data = {
         "to": "+372123456789",
@@ -27,10 +20,11 @@ def mk_sms_data(data=None):
 @responses.activate
 def test_invalid_credentials():
     responses.add_callback(
-        responses.GET, utils.ANY_URL,
+        responses.GET, utils.TEST_ANY_URL,
         callback=utils.mock_response(200, "ERROR 101"),
     )
 
+    api = sms.SmsAPI(api_url=utils.TEST_URL)
     r = api.send(mk_sms_data(), validate=False)
     assert isinstance(r, Response)
     assert isinstance(r, sms.SmsResponse)
@@ -44,10 +38,11 @@ def test_send():
     sms_id = "sms-001"
     text = "OK %s" % sms_id
     responses.add_callback(
-        responses.GET, utils.ANY_URL,
+        responses.GET, utils.TEST_ANY_URL,
         callback=utils.mock_response(200, text),
     )
 
+    api = sms.SmsAPI(api_url=utils.TEST_URL)
     r = api.send(mk_sms_data())
 
     assert r.error_code is None
@@ -58,6 +53,7 @@ def test_send():
 
 
 def test_send_invalid():
+    api = sms.SmsAPI(api_url=utils.TEST_URL)
     raised = False
     try:
         r = api.send({})
@@ -71,11 +67,11 @@ def test_send_no_validate():
     sms_id = "sms-001"
     text = "OK %s" % sms_id
     responses.add_callback(
-        responses.GET, utils.ANY_URL,
+        responses.GET, utils.TEST_ANY_URL,
         callback=utils.mock_response(200, text),
     )
 
+    api = sms.SmsAPI(api_url=utils.TEST_URL)
     r = api.send({}, validate=False)
     # OK if no exception was raised
     assert True
-

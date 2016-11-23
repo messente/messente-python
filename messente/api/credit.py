@@ -5,7 +5,7 @@ from messente.api import api
 from messente.api.response import Response
 
 
-class CreditsResponse(Response):
+class CreditResponse(Response):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -15,18 +15,13 @@ class CreditsResponse(Response):
         return None
 
 
-class CreditsAPI(api.API):
+class CreditAPI(api.API):
     """Documentation: http://messente.com/documentation/credits-api"""
 
     def __init__(self, **kwargs):
-        super().__init__(config_section="credits", **kwargs)
+        super().__init__("credit", **kwargs)
 
     def get_balance(self):
-        r = CreditsResponse(self.call_api("get_balance"))
-        if not r.is_replied():
-            self.log.critical("No response")
-        elif not r.is_ok():
-            self.log.error(r.get_full_error_msg())
-        else:
-            self.log.debug(r.get_raw_text())
+        r = CreditResponse(self.call_api("get_balance"))
+        self.log_response(r)
         return r

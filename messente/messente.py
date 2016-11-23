@@ -9,6 +9,7 @@ class Messente(object):
         if kwargs.get("ini_path", ""):
             api.config.load(kwargs.pop("ini_path"))
         # modules
-        self.sms = api.sms.SmsAPI()
-        self.credit = api.credit.CreditsAPI()
-        self.delivery = api.delivery.DeliveryAPI()
+        self.sms = api.sms.SmsAPI(**kwargs)
+        self.credit = api.credit.CreditAPI(**kwargs)
+        self.delivery = api.delivery.DeliveryAPI(**kwargs)
+        self.pricing = api.pricing.PricingAPI(**kwargs)

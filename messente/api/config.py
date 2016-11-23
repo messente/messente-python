@@ -16,11 +16,10 @@ configuration = configparser.SafeConfigParser()
 configuration["default"] = dict(
     api_url=os.getenv(
         "MESSENTE_API_URL",
-        "https://api2.messente.com"
+        "https://api21.messente.com"
     ),
     username=os.getenv("MESSENTE_API_USERNAME", ""),
     password=os.getenv("MESSENTE_API_PASSWORD", ""),
-    endpoint="",
     log_stdout=False,
     log_debug=False,
     log_format=DEFAULT_LOG_FORMAT.replace("%", "%%"),

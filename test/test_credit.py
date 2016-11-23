@@ -7,32 +7,17 @@ from messente.api import Response
 from messente.api.error import ConfigurationError
 
 
-api = credit.CreditsAPI(
+api = credit.CreditAPI(
     user="test",
     password="test",
     api_url=utils.TEST_URL
 )
 
 
-def test_invalid_config_path():
-    raised = False
-    try:
-        credit.CreditsAPI(
-            user="test",
-            password="test",
-            api_url=utils.TEST_URL,
-            ini_path="non-existent-and-thus-invalid.ini"
-        )
-    except ConfigurationError:
-        raised = True
-
-    assert raised
-
-
 @responses.activate
 def test_invalid_credentials():
     responses.add_callback(
-        responses.GET, utils.ANY_URL,
+        responses.GET, utils.TEST_ANY_URL,
         callback=utils.mock_response(200, "ERROR 101"),
     )
 
@@ -47,14 +32,14 @@ def test_get_balance():
     value = 123.45678
     text = "OK %s" % value
     responses.add_callback(
-        responses.GET, utils.ANY_URL,
+        responses.GET, utils.TEST_ANY_URL,
         callback=utils.mock_response(200, text),
     )
 
     r = api.get_balance()
 
     assert isinstance(r, Response)
-    assert isinstance(r, credit.CreditsResponse)
+    assert isinstance(r, credit.CreditResponse)
 
     assert r.error_code is None
     assert r.error_msg == ""
@@ -67,7 +52,7 @@ def test_get_balance():
 def test_server_failure():
     value = "FAILED 209"
     responses.add_callback(
-        responses.GET, utils.ANY_URL,
+        responses.GET, utils.TEST_ANY_URL,
         callback=utils.mock_response(200, value),
     )
 

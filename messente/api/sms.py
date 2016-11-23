@@ -10,11 +10,6 @@ from messente.api.error import ERROR_CODES
 
 error_map = ERROR_CODES.copy()
 error_map.update({
-    "ERROR 103": " ".join([
-        "Invalid IP address.",
-        "The IP address you made the request from,",
-        "is not in the API whitelist settings.",
-    ]),
     "ERROR 104": " ".join([
         "Destination country for this number was not found."
     ]),
@@ -48,7 +43,7 @@ class SmsAPI(api.API):
     """Documentation: http://messente.com/documentation/sending-sms"""
 
     def __init__(self, **kwargs):
-        super().__init__(config_section="sms", **kwargs)
+        super().__init__("sms", **kwargs)
 
     def send(self, data, **kwargs):
         if kwargs.get("validate", True):
@@ -59,13 +54,7 @@ class SmsAPI(api.API):
                     raise InvalidMessageError("Message is invalid")
 
         r = SmsResponse(self.call_api("send_sms", **data))
-
-        if not r.is_replied():
-            self.log.critical("No response")
-        elif not r.is_ok():
-            self.log.error(r.get_full_error_msg())
-        else:
-            self.log.debug(r.get_raw_text())
+        self.log_response(r)
         return r
 
     def validate(self, data):
