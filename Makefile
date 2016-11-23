@@ -1,4 +1,4 @@
 test:
-	@PYTHONPATH=`pwd`/src nosetests -vs
+	@nosetests -vs
 
 .PHONY: test

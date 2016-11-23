@@ -10,6 +10,9 @@ from messente.api.config import configuration
 class API(Logger):
     def __init__(self, **kwargs):
         self._config_section = kwargs.pop("config_section", "default")
+        for section in ["default", self._config_section]:
+            if not configuration.has_section(section):
+                configuration.add_section(section)
         self.set_option("api_url", kwargs.pop(
             "api_url", os.getenv("MESSENTE_API_URL", "")
         ))
@@ -35,11 +38,11 @@ class API(Logger):
         )
         self.log.info("Initialized")
 
-    def call_api(self, method="GET", **data):
+    def call_api(self, endpoint, method="GET", **data):
         fmt = "{api_url}/{endpoint}"
         url_params = dict(
             api_url=self.get_option("api_url"),
-            endpoint=self.get_option("endpoint", ""),
+            endpoint=endpoint,
         )
         url = fmt.format(**url_params)
         data.update(dict(
@@ -47,7 +50,7 @@ class API(Logger):
             password="[redacted]",
         ))
 
-        self.log.info("GET: %s", url)
+        self.log.info("%s: %s", method, url)
         self.log.debug("%s", data)
 
         data.update(dict(password=self.get_option("password")))

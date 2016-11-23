@@ -56,7 +56,7 @@ class SmsAPI(api.API):
                     self.log.error("%s: %s", field, errors[field])
                 raise InvalidMessageError("Message is invalid")
 
-        r = SmsResponse(self.call_api(**kwargs))
+        r = SmsResponse(self.call_api("send_sms", **kwargs))
 
         if not r.is_replied():
             self.log.critical("No response")

@@ -5,6 +5,15 @@ from messente.api import api
 from messente.api.response import Response
 
 
+class CreditsResponse(Response):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def get_balance_value(self):
+        if self.is_ok():
+            self.get_raw_text().split(" ")[1]
+
+
 class CreditsAPI(api.API):
     """Documentation: http://messente.com/documentation/credits-api"""
 
@@ -12,11 +21,11 @@ class CreditsAPI(api.API):
         super().__init__(config_section="credits", **kwargs)
 
     def get_balance(self, **kwargs):
-        r = Response(self.call_api(**kwargs))
+        r = CreditsResponse(self.call_api("get_balance", **kwargs))
         if not r.is_replied():
             self.log.critical("No response")
         elif not r.is_ok():
             self.log.error(r.get_full_error_msg())
         else:
             self.log.info(r.get_raw_text())
-        return r.get_raw_text().split(" ")[1]
+        return r
