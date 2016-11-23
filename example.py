@@ -17,4 +17,5 @@ api = messente.Messente(ini_path="config.ini")
 # print(response.get_raw_text())
 
 
-# r = api.pricing.get_country_prices("pl")
+r = api.pricing.get_country_prices("ee")
+r = api.pricing.get_pricelist()

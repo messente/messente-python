@@ -55,5 +55,8 @@ class Response(object):
     def get_raw_text(self):
         return self.raw_response.text
 
+    def get_result(self):
+        return self.get_raw_text()
+
     def _get_error_map(self):
         return ERROR_CODES

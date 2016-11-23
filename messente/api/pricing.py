@@ -25,8 +25,12 @@ class PricingResponse(Response):
 
     def get_result(self):
         if self.is_ok():
-            return json.loads(self.get_raw_text())
-        return {}
+            content_type = self.raw_response.headers.get("Content-type", "")
+            if "text/csv" in content_type or "xml" in content_type:
+                return self.get_raw_text()
+            elif "json" in content_type:
+                return json.loads(self.get_raw_text())
+        return None
 
 
 class PricingAPI(api.API):
@@ -48,5 +52,10 @@ class PricingAPI(api.API):
                 format=response_format,
             )
         )
+        self.log_response(r)
+        return r
+
+    def get_pricelist(self):
+        r = PricingResponse(self.call_api("pricelist"))
         self.log_response(r)
         return r
