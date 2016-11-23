@@ -11,3 +11,4 @@ class Messente(object):
         # modules
         self.sms = api.sms.SmsAPI()
         self.credit = api.credit.CreditsAPI()
+        self.delivery = api.delivery.DeliveryAPI()

@@ -1,11 +1,6 @@
 import messente
 
-api = messente.Messente(
-#    username="username",
-#    password="pass",
-    ini_path="config.ini",
-)
-
+api = messente.Messente(ini_path="config.ini")
 print(api.credit.get_balance())
 
 sms_data = dict(
@@ -20,6 +15,3 @@ sms_data = dict(
 response = api.sms.send(sms_data)
 print(response.get_full_error_msg())
 print(response.get_raw_text())
-
-# send_safe returns None if message is invalid
-# response = api.sms.send_safe(**sms_data)

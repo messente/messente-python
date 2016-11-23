@@ -23,13 +23,10 @@ error_map.update({
     ]),
     "ERROR 106": " ".join(["Destination country is not supported."]),
     "ERROR 107": " ".join(["Not enough credit on account."]),
-    "ERROR 108": " ".join(["Number is in blacklist."]),
+    "ERROR 108": " ".join(["Number is blacklisted."]),
     "ERROR 111": " ".join([
         "Sender parameter 'from' is invalid.",
         "You have not activated this sender name on Messente.com.",
-    ]),
-    "FAILED 102": " ".join([
-        "No delivery report yet, try again in 5 seconds"
     ]),
 })
 
@@ -68,7 +65,7 @@ class SmsAPI(api.API):
         elif not r.is_ok():
             self.log.error(r.get_full_error_msg())
         else:
-            self.log.info(r.get_raw_text())
+            self.log.debug(r.get_raw_text())
         return r
 
     def validate(self, data):

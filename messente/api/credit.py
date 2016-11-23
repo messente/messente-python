@@ -21,12 +21,12 @@ class CreditsAPI(api.API):
     def __init__(self, **kwargs):
         super().__init__(config_section="credits", **kwargs)
 
-    def get_balance(self, **kwargs):
-        r = CreditsResponse(self.call_api("get_balance", **kwargs))
+    def get_balance(self):
+        r = CreditsResponse(self.call_api("get_balance"))
         if not r.is_replied():
             self.log.critical("No response")
         elif not r.is_ok():
             self.log.error(r.get_full_error_msg())
         else:
-            self.log.info(r.get_raw_text())
+            self.log.debug(r.get_raw_text())
         return r

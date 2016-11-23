@@ -11,7 +11,8 @@ class TestMessente(unittest.TestCase):
         api = messente.Messente()
         self.assertIsInstance(api.sms, messente.api.sms.SmsAPI)
         self.assertIsInstance(api.credit, messente.api.credit.CreditsAPI)
-        apis = [api.sms, api.credit]
+        self.assertIsInstance(api.delivery, messente.api.delivery.DeliveryAPI)
+        apis = [api.sms, api.credit, api.delivery]
         for item in apis:
             self.assertIsInstance(item, messente.api.api.API)
 

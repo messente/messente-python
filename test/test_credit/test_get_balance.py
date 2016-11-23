@@ -3,6 +3,7 @@ import responses
 from test import utils
 
 from messente.api import credit
+from messente.api import Response
 from messente.api.error import ConfigurationError
 
 
@@ -52,7 +53,7 @@ def test_get_balance():
 
     r = api.get_balance()
 
-    assert isinstance(r, credit.Response)
+    assert isinstance(r, Response)
     assert isinstance(r, credit.CreditsResponse)
 
     assert r.error_code is None
@@ -71,9 +72,6 @@ def test_server_failure():
     )
 
     r = api.get_balance()
-
-    assert isinstance(r, credit.Response)
-    assert isinstance(r, credit.CreditsResponse)
 
     assert r.error_code == 209
     assert r.status == "FAILED"
