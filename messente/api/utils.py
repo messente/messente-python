@@ -4,7 +4,7 @@ import time
 def is_int(value):
     try:
         int(value)
-    except ValueError:
+    except (ValueError, TypeError):
         return False
     return True
 

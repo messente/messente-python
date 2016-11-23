@@ -41,6 +41,11 @@ class SmsResponse(Response):
     def _get_error_map(self):
         return error_map
 
+    def get_sms_id(self):
+        if self.is_ok():
+            return self.get_raw_text().split(" ")[1]
+        return None
+
 
 class SmsAPI(api.API):
     """Documentation: http://messente.com/documentation/sending-sms"""
@@ -48,15 +53,15 @@ class SmsAPI(api.API):
     def __init__(self, **kwargs):
         super().__init__(config_section="sms", **kwargs)
 
-    def send(self, validate=True, **kwargs):
-        if validate:
-            (ok, errors) = self.validate(kwargs)
+    def send(self, data, **kwargs):
+        if kwargs.get("validate", True):
+            (ok, errors) = self.validate(data)
             if not ok:
                 for field in errors:
                     self.log.error("%s: %s", field, errors[field])
-                raise InvalidMessageError("Message is invalid")
+                    raise InvalidMessageError("Message is invalid")
 
-        r = SmsResponse(self.call_api("send_sms", **kwargs))
+        r = SmsResponse(self.call_api("send_sms", **data))
 
         if not r.is_replied():
             self.log.critical("No response")
@@ -66,46 +71,41 @@ class SmsAPI(api.API):
             self.log.info(r.get_raw_text())
         return r
 
-    def send_safe(self, **kwargs):
-        """Prevents raising exception on failed validation"""
-        try:
-            self.send(**kwargs)
-        except InvalidMessageError:
-            pass
-        return None
-
     def validate(self, data):
         errors = {}
-        if "to" not in data:
+        to = data.get("to", "")
+        if not to:
             errors["to"] = "Required: 'to'"
 
-        content = data.get("text", "")
-        if not content:
-            errors["text"] = "Required: 'text'/'content'"
+        text = data.get("text", "")
+        if not text:
+            errors["text"] = "Required: 'text'"
 
-        time_to_send = data.get("time_to_send")
-        if time_to_send:
-            is_positive_int = str(data["time_to_send"]).isdigit()
-            if not is_positive_int or not utils.ge_epoch(time_to_send):
+        time_to_send = data.get("time_to_send", None)
+        if time_to_send is not None:
+            is_int = utils.is_int(time_to_send)
+            if not is_int or not utils.ge_epoch(int(time_to_send)):
                 errors["time_to_send"] = "Invalid 'time_to_send'"
 
-        if "validity" in data and not str(data["validity"]).isdigit():
+        validity = data.get("validity", None)
+        if validity is not None and not str(data["validity"]).isdigit():
             errors["validity"] = "Invalid 'validity'"
 
-        autoconvert = data.get("autoconvert")
-        if autoconvert and autoconvert not in ["on", "off", "full"]:
+        autoconvert = data.get("autoconvert", None)
+        if autoconvert is not None and autoconvert not in ["on", "off", "full"]:
             errors["autoconvert"] = "Invalid 'autoconvert'"
 
-        udh = data.get("udh")
-        if udh and udh not in ["MS", "UE"]:
+        udh = data.get("udh", None)
+        if udh is not None and udh not in ["MS", "UE"]:
             errors["udh"] = "Invalid 'udh'"
 
-        mclass = data.get("mclass")
-        if mclass and mclass not in [0, 1, 2, 3]:
+        mclass = data.get("mclass", None)
+        if mclass is not None and mclass not in [0, 1, 2, 3]:
             errors["mclass"] = "Invalid 'mclass'"
 
-        text_store = data.get("text-store")
-        if text_store and text_store not in ["plaintext", "sha256", "nostore"]:
+        text_store = data.get("text-store", None)
+        isset = text_store is not None
+        if isset and text_store not in ["plaintext", "sha256", "nostore"]:
             errors["text-store"] = "Invalid 'text-store'"
 
         return (not len(errors), errors)

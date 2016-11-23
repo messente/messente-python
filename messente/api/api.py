@@ -4,15 +4,15 @@ import os
 import requests
 
 from messente.logging import Logger
-from messente.api.config import configuration
+from messente.api import config
 
 
 class API(Logger):
     def __init__(self, **kwargs):
         self._config_section = kwargs.pop("config_section", "default")
         for section in ["default", self._config_section]:
-            if not configuration.has_section(section):
-                configuration.add_section(section)
+            if not config.configuration.has_section(section):
+                config.configuration.add_section(section)
         self.set_option("api_url", kwargs.pop(
             "api_url", os.getenv("MESSENTE_API_URL", "")
         ))
@@ -22,12 +22,14 @@ class API(Logger):
         self.set_option("password", kwargs.pop(
             "password", os.getenv("MESSENTE_API_PASSWORD", "")
         ))
-        self.set_option("enpoint", kwargs.pop("endpoint", ""))
+
+        if kwargs.get("ini_path", ""):
+            config.load(kwargs.pop("ini_path"))
 
         self._config_getters = {
-            str: configuration.get,
-            int: configuration.getint,
-            bool: configuration.getboolean,
+            str: config.configuration.get,
+            int: config.configuration.getint,
+            bool: config.configuration.getboolean,
         }
 
         super().__init__(
@@ -68,14 +70,14 @@ class API(Logger):
 
     def set_option(self, option, value):
         if value:
-            configuration[self._config_section][option] = value
+            config.configuration[self._config_section][option] = value
 
     def get_option(self, option, default=None, **kwargs):
         data_type = kwargs.pop("data_type", str)
         default_value = (default or data_type())
         fallback_section = kwargs.pop("fallback_section", "default")
         section = self._config_section
-        if not configuration.has_option(self._config_section, option):
+        if not config.configuration.has_option(self._config_section, option):
             section = fallback_section
         getter = self._config_getters[data_type]
         return getter(section, option, fallback=default_value)

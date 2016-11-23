@@ -3,6 +3,7 @@ from __future__ import absolute_import
 import os
 from messente.api.error import ConfigurationError
 from messente.logging import DEFAULT_LOG_FORMAT
+from messente.logging import log
 
 try:
     import configparser
@@ -25,14 +26,13 @@ configuration["default"] = dict(
     log_format=DEFAULT_LOG_FORMAT.replace("%", "%%"),
 )
 
-configuration["sms"] = dict(
-    api_url="https://api2.messente.com",
-    endpoint="send_sms"
-)
+configuration.add_section("sms")
+configuration.add_section("credit")
 
 
 def load(path):
     global configuration
+    log.debug("Loading configuration file: %s", path)
     path = os.path.expanduser(path)
     if not os.path.exists(path):
         raise ConfigurationError(

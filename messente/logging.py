@@ -9,12 +9,12 @@ from messente.api.error import ConfigurationError
 
 DEFAULT_LOG_FORMAT = "%(asctime)-15s %(levelname)-7s %(name)-24s %(message)s"
 DEFAULT_FORMATTER = logging.Formatter(DEFAULT_LOG_FORMAT)
-ROOT_LOGGER = logging.getLogger("messente")
+log = logging.getLogger("messente")
 
 
 class Logger(object):
     def __init__(self, name=None, **kwargs):
-        self.log = ROOT_LOGGER.getChild((name or self.__class__.__name__))
+        self.log = log.getChild((name or self.__class__.__name__))
 
         if kwargs.pop("debug", False):
             self.log.setLevel(logging.DEBUG)

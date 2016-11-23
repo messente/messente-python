@@ -11,7 +11,8 @@ class CreditsResponse(Response):
 
     def get_balance_value(self):
         if self.is_ok():
-            self.get_raw_text().split(" ")[1]
+            return self.get_raw_text().split(" ")[1]
+        return None
 
 
 class CreditsAPI(api.API):

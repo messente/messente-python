@@ -17,7 +17,7 @@ sms_data = dict(
 (ok, errors) = api.sms.validate(sms_data)
 
 # sending message (may raise InvalidMessageError)
-response = api.sms.send(**sms_data)
+response = api.sms.send(sms_data)
 print(response.get_full_error_msg())
 print(response.get_raw_text())
 
