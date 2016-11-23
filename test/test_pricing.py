@@ -31,7 +31,28 @@ def test_get_coutry_prices():
     assert isinstance(r, Response)
     assert isinstance(r, pricing.PricingResponse)
     assert r.is_ok()
-    assert (r.get_result().get("networks")[1]["name"] == "Elisa")
+    assert (json.loads(r.get_result()).get("networks")[1]["name"] == "Elisa")
+
+    r = api.get_country_prices("EE", format="xml")
+    # only test if ok - only json is mocked
+    assert r.is_ok()
+
+
+@responses.activate
+def test_get_pricelist():
+    responses.add_callback(
+        responses.GET, utils.TEST_ANY_URL,
+        callback=utils.mock_response(200, fake_response, headers={
+            "Content-type": "text/csv;charset=UTF-8"
+        }),
+    )
+
+    api = pricing.PricingAPI(api_url=utils.TEST_URL)
+    r = api.get_pricelist()
+    assert isinstance(r, Response)
+    assert isinstance(r, pricing.PricingResponse)
+    assert r.is_ok()
+    assert len(r.get_result())
 
     r = api.get_country_prices("EE", format="xml")
     # only test if ok - only json is mocked

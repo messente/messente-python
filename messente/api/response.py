@@ -4,7 +4,7 @@ from messente.api.error import ERROR_CODES
 
 
 class Response(object):
-    def __init__(self, response):
+    def __init__(self, response, *args, **kwargs):
         self.raw_response = response
         self.error_code = None
         self.error_msg = ""

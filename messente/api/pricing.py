@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-import json
+
 
 from messente.api import config
 from messente.api import api
@@ -23,15 +23,6 @@ class PricingResponse(Response):
     def _get_error_map(self):
         return error_map
 
-    def get_result(self):
-        if self.is_ok():
-            content_type = self.raw_response.headers.get("Content-type", "")
-            if "text/csv" in content_type or "xml" in content_type:
-                return self.get_raw_text()
-            elif "json" in content_type:
-                return json.loads(self.get_raw_text())
-        return None
-
 
 class PricingAPI(api.API):
     """https://messente.com/documentation/tools/pricing-api"""
@@ -50,7 +41,8 @@ class PricingAPI(api.API):
                 "prices",
                 country=country_code,
                 format=response_format,
-            )
+            ),
+            format=response_format,
         )
         self.log_response(r)
         return r
