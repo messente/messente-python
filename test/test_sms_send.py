@@ -75,3 +75,21 @@ def test_send_no_validate():
     r = api.send({}, validate=False)
     # OK if no exception was raised
     assert True
+
+
+@responses.activate
+def test_cancel():
+    text = "OK DELETED"
+    responses.add_callback(
+        responses.GET, utils.TEST_ANY_URL,
+        callback=utils.mock_response(200, text),
+    )
+
+    api = sms.SmsAPI(api_url=utils.TEST_URL)
+    r = api.cancel("sms-id")
+
+    assert r.error_code is None
+    assert r.error_msg == ""
+    assert r.status == "OK"
+    assert r.get_raw_text() == text
+    assert r.get_result() == text

@@ -57,6 +57,11 @@ class SmsAPI(api.API):
         self.log_response(r)
         return r
 
+    def cancel(self, sms_id):
+        r = SmsResponse(self.call_api("cancel_sms", sms_unique_id=sms_id))
+        self.log_response(r)
+        return r
+
     def validate(self, data):
         errors = {}
         to = data.get("to", "")
