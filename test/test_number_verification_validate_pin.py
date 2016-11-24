@@ -46,8 +46,8 @@ class TestValidate(unittest.TestCase):
     def test_field_values(self):
         cases = {
             "pin": {
-                "invalid": [None, "", {}, [], 0, -10, True, False],
-                "valid": [],
+                "invalid": [None, "", "test", {}, [], 0, -10, True, False],
+                "valid": ["1234", 1234123],
             },
             "verification_id": {
                 "invalid": [None, "", -1, 0, 3.14, 100, True, False],
