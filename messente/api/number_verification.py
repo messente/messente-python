@@ -75,7 +75,7 @@ class NumberVerificationAPI(api.API):
 
     def verify_start(self, data, **kwargs):
         if kwargs.get("validate", True):
-            self.validate(data, mode="start")
+            self.validate(data, mode="start", fatal=True)
         r = NumberVerificationResponse(
             self.call_api(
                 "verify/start",
@@ -87,7 +87,7 @@ class NumberVerificationAPI(api.API):
 
     def verify_pin(self, data, **kwargs):
         if kwargs.pop("validate", True):
-            self.validate(data, mode="pin")
+            self.validate(data, mode="pin", fatal=True)
         r = NumberVerificationResponse(
             self.call_api(
                 "verify/pin",

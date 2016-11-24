@@ -9,7 +9,7 @@ class CreditResponse(Response):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def get_balance_value(self):
+    def get_result(self):
         if self.is_ok():
             return self.get_raw_text().split(" ")[1]
         return None

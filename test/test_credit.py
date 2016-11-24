@@ -45,7 +45,7 @@ def test_get_balance():
     assert r.error_msg == ""
     assert r.status == "OK"
     assert r.get_raw_text() == text
-    assert r.get_balance_value() == str(value)
+    assert r.get_result() == str(value)
 
 
 @responses.activate

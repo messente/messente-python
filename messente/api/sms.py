@@ -60,7 +60,7 @@ class SmsAPI(api.API):
 
     def send(self, data, **kwargs):
         if kwargs.pop("validate", True):
-            self.validate(data)
+            self.validate(data, fatal=True)
 
         r = SmsResponse(self.call_api("send_sms", **data))
         self.log_response(r)

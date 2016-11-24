@@ -7,8 +7,7 @@ import logging
 from messente.api.error import ConfigurationError
 
 
-DEFAULT_LOG_FORMAT = "%(asctime)-15s %(levelname)-7s %(name)-24s %(message)s"
-DEFAULT_FORMATTER = logging.Formatter(DEFAULT_LOG_FORMAT)
+DEFAULT_LOG_FORMAT = "%(asctime)-15s %(levelname)-7s %(name)-32s %(message)s"
 log = logging.getLogger("messente")
 
 
@@ -18,12 +17,12 @@ class Logger(object):
 
         if kwargs.pop("log_debug", False):
             self.log.setLevel(logging.DEBUG)
+        else:
+            self.log.setLevel(logging.INFO)
 
-        formatter = DEFAULT_FORMATTER
-        if "log_format" in kwargs:
-            formatter = logging.Formatter(
-                kwargs.pop("log_format", DEFAULT_LOG_FORMAT)
-            )
+        formatter = logging.Formatter(
+            kwargs.pop("log_format", DEFAULT_LOG_FORMAT)
+        )
 
         handlers = []
         if kwargs.pop("log_stdout", False):

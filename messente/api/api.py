@@ -115,15 +115,14 @@ class API(Logger):
         else:
             self.log.debug(r.get_raw_text())
 
-    def log_errors_and_raise(self, errors):
-        for field in errors:
-            self.log.error("%s: %s", field, errors[field])
-            raise InvalidMessageError("Message is invalid")
-
     def validate(self, data, **kwargs):
         (ok, errors) = self._validate(data, **kwargs)
         if not ok:
-            self.log_errors_and_raise(errors)
+            for field in errors:
+                self.log.error("%s: %s", field, errors[field])
+            if kwargs.get("fatal", False):
+                raise InvalidMessageError("Message is invalid")
+        return (ok, errors)
 
     def _validate(self, data, **kwargs):
         return (True, {})
