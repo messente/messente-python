@@ -24,7 +24,7 @@ def test_invalid_credentials():
         callback=utils.mock_response(200, "ERROR 101"),
     )
 
-    api = sms.SmsAPI(api_url=utils.TEST_URL)
+    api = sms.SmsAPI(urls=utils.TEST_URL)
     r = api.send(mk_sms_data(), validate=False)
     assert isinstance(r, Response)
     assert isinstance(r, sms.SmsResponse)
@@ -42,7 +42,7 @@ def test_send():
         callback=utils.mock_response(200, text),
     )
 
-    api = sms.SmsAPI(api_url=utils.TEST_URL)
+    api = sms.SmsAPI(urls=utils.TEST_URL)
     r = api.send(mk_sms_data())
 
     assert r.error_code is None
@@ -53,7 +53,7 @@ def test_send():
 
 
 def test_send_invalid():
-    api = sms.SmsAPI(api_url=utils.TEST_URL)
+    api = sms.SmsAPI(urls=utils.TEST_URL)
     raised = False
     try:
         r = api.send({})
@@ -71,7 +71,7 @@ def test_send_no_validate():
         callback=utils.mock_response(200, text),
     )
 
-    api = sms.SmsAPI(api_url=utils.TEST_URL)
+    api = sms.SmsAPI(urls=utils.TEST_URL)
     r = api.send({}, validate=False)
     # OK if no exception was raised
     assert True
@@ -85,7 +85,7 @@ def test_cancel():
         callback=utils.mock_response(200, text),
     )
 
-    api = sms.SmsAPI(api_url=utils.TEST_URL)
+    api = sms.SmsAPI(urls=utils.TEST_URL)
     r = api.cancel("sms-id")
 
     assert isinstance(r, Response)

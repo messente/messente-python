@@ -14,10 +14,7 @@ except ImportError:
 configuration = configparser.SafeConfigParser()
 
 configuration["default"] = dict(
-    api_url=os.getenv(
-        "MESSENTE_API_URL",
-        "https://api2.messente.com"
-    ),
+    urls="https://api2.messente.com",
     username=os.getenv("MESSENTE_API_USERNAME", ""),
     password=os.getenv("MESSENTE_API_PASSWORD", ""),
     log_stdout=False,

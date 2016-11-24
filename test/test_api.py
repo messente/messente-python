@@ -22,19 +22,9 @@ class TestApi(unittest.TestCase):
             username=username,
             password=password,
             config_section=module_name,
-            api_url=utils.TEST_URL
+            urls=utils.TEST_URL
         )
-        self.assertEqual(
-            api.get_str_option("api_url"),
-            utils.TEST_URL
-        )
-
-        new_url = "https://example.com/test_api/new_url"
-        api.set_option("api_url", new_url)
-        self.assertEqual(
-            api.get_str_option("api_url"),
-            new_url
-        )
+        self.assertEqual(api.api_urls, [utils.TEST_URL])
 
         self.assertTrue(module_name in configuration.sections())
         self.assertEqual(api.get_str_option("username"), username)

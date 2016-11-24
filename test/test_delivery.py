@@ -6,7 +6,7 @@ from messente.api import delivery
 from messente.api import Response
 
 
-api = delivery.DeliveryAPI(api_url=utils.TEST_DLR_URL)
+api = delivery.DeliveryAPI(urls=utils.TEST_DLR_URL)
 
 
 @responses.activate

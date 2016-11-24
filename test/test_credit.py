@@ -10,7 +10,7 @@ from messente.api.error import ConfigurationError
 api = credit.CreditAPI(
     user="test",
     password="test",
-    api_url=utils.TEST_URL
+    urls=utils.TEST_URL
 )
 
 

@@ -7,11 +7,11 @@ class TestMessenteLibrary(unittest.TestCase):
         with self.assertRaises(messente.api.error.ConfigurationError):
             messente.Messente(
                 ini_path="invalid-path.ini",
-                api_url="https://test-messente.example.com"
+                urls="https://test-messente.example.com"
             )
 
     def test_modules_init(self):
-        api = messente.Messente(api_url="https://test.example.com")
+        api = messente.Messente(urls="https://test.example.com")
         self.assertIsInstance(api.sms, messente.api.sms.SmsAPI)
         self.assertIsInstance(api.credit, messente.api.credit.CreditAPI)
         self.assertIsInstance(api.delivery, messente.api.delivery.DeliveryAPI)

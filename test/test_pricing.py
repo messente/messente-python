@@ -27,7 +27,7 @@ def test_get_coutry_prices():
         callback=utils.mock_response(200, fake_response),
     )
 
-    api = pricing.PricingAPI(api_url=utils.TEST_URL)
+    api = pricing.PricingAPI(urls=utils.TEST_URL)
     r = api.get_country_prices("EE")
     assert isinstance(r, Response)
     assert isinstance(r, pricing.PricingResponse)
@@ -50,7 +50,7 @@ def test_get_pricelist():
     )
 
     (fh, path) = tempfile.mkstemp()
-    api = pricing.PricingAPI(api_url=utils.TEST_URL)
+    api = pricing.PricingAPI(urls=utils.TEST_URL)
     r = api.get_pricelist(path)
     assert isinstance(r, Response)
     assert isinstance(r, pricing.PricingResponse)

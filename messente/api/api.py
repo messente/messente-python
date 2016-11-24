@@ -5,6 +5,7 @@ import requests
 
 from messente.logging import Logger
 from messente.api import config
+from messente.api.error import ConfigurationError
 
 
 class API(Logger):
@@ -30,48 +31,55 @@ class API(Logger):
             log_file=self.get_option("log_file"),
         )
         overrides = {
-            "api_url": "MESSENTE_API_URL",
             "username": "MESSENTE_API_USERNAME",
             "password": "MESSENTE_API_PASSWORD",
         }
 
-        for item in overrides:
-            value = kwargs.pop(item, os.getenv(overrides[item], ""))
+        for option in overrides:
+            value = kwargs.pop(option, os.getenv(overrides[option], ""))
             if value:
-                self.set_option(item, value)
-
+                config.configuration[self._config_section][option] = value
+        self.api_urls = []
+        self.set_urls(kwargs.pop("urls", None))
         self.log.info("Initialized")
 
+    def set_urls(self, urls=None):
+        if not urls:
+            urls = self.get_option("urls", "")
+        if not urls:
+            raise Exception()
+        if type(urls) not in [list, tuple]:
+            urls = urls.split(" ")
+        self.api_urls = [url.strip() for url in urls]
+
     def call_api(self, endpoint, method="GET", **data):
-        fmt = "{api_url}/{endpoint}"
-        url_params = dict(
-            api_url=self.get_option("api_url"),
-            endpoint=endpoint,
-        )
-        url = fmt.format(**url_params)
-        data.update(dict(
-            username=self.get_option("username"),
-            password="[redacted]",
-        ))
+        if not self.api_urls:
+            raise ConfigurationError("No urls configured")
+        # first succesful url makes the function return
+        for url in self.api_urls:
+            url = "{url}/{endpoint}".format(url=url, endpoint=endpoint)
+            data.update(dict(
+                username=self.get_option("username"),
+                password="[redacted]",
+            ))
 
-        self.log.info("%s: %s", method, url)
-        self.log.debug("%s", data)
+            self.log.info("%s: %s", method, url)
+            self.log.debug("%s", data)
 
-        data.update(dict(password=self.get_option("password")))
+            data.update(dict(password=self.get_option("password")))
 
-        try:
-            r = None
-            method = method.upper()
-            if method == "GET":
-                r = requests.get(url, params=data, allow_redirects=True)
-            elif method == "POST":
-                r = requests.post(url, params=data, allow_redirects=True)
-            return r
-        except Exception as e:
-            self.log.exception(e)
-
-    def set_option(self, option, value):
-        config.configuration[self._config_section][option] = value
+            try:
+                r = None
+                method = method.upper()
+                if method == "GET":
+                    r = requests.get(url, params=data, allow_redirects=True)
+                elif method == "POST":
+                    r = requests.post(url, params=data, allow_redirects=True)
+                return r
+            except Exception as e:
+                self.log.exception(e)
+        self.log.error("No more urls to try. Giving up.")
+        return None
 
     def get_option(self, option, default=None, **kwargs):
         data_type = kwargs.pop("data_type", str)
