@@ -4,9 +4,10 @@ Python API supporting Messente.com services.
 
 Modules:
 - sms (SmsAPI)
+- delivery (DeliveryAPI)
 - credit (CreditsAPI)
-- number_verification (NumberVerificationAPI)
 - pricing (PricingAPI)
+- number_verification (NumberVerificationAPI)
 
 
 ## Configuration parameters
@@ -16,15 +17,16 @@ Configuration parameters can passed via:
 - configuration file (*.ini)
 
 Authentication parameters can be set in environment as:
-*MESSENTE_API_USERNAME* and *MESSENTE_API_PASSWORD*
+- **MESSENTE_API_USERNAME**
+- **MESSENTE_API_PASSWORD**
 
 ## Examples
 
-
+You can find sample scripts in the 'examples' directory.
 
 ### SmsAPI
 
-The most basic and straightforward code to send a sms is
+#### Basic example
 
 ```python
 import messente
@@ -33,6 +35,8 @@ api = messente.Messente(username="user", password="password")
 api.sms.send(dict(to="+XXXxxxxxxxxx", text="test"))
 
 ```
+
+#### Advanced example
 
 A little more advanced example including validation, error handling
 and cancelling a message can be demonstrated as:
@@ -115,3 +119,9 @@ response = api.pricing.get_pricelist(filename)
 if response.is_ok():
     print("Pricelist saved in:", filename)
 ```
+
+
+## Running unittests tests
+
+To run all the unit tests, simply execute:
+```nosetests -v```

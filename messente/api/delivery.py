@@ -21,10 +21,8 @@ class DeliveryResponse(Response):
     def _get_error_map(self):
         return error_map
 
-    def get_delivery_status(self):
-        if self.is_ok():
-            return self.get_raw_text().split(" ")[1]
-        return None
+    def get_result(self):
+        return self.status_text
 
 
 class DeliveryAPI(api.API):

@@ -22,7 +22,7 @@ def test_dlr():
     assert isinstance(r, Response)
     assert isinstance(r, delivery.DeliveryResponse)
     assert r.get_raw_text() == text
-    assert r.get_delivery_status() == "DELIVERED"
+    assert r.get_result() == "DELIVERED"
 
 
 @responses.activate
@@ -36,5 +36,5 @@ def test_dlr_failed():
     r = api.get_dlr_response("smsid")
     assert isinstance(r, Response)
     assert isinstance(r, delivery.DeliveryResponse)
-    assert r.get_delivery_status() is None
+    assert r.get_result() is ""
     assert not r.is_ok()
