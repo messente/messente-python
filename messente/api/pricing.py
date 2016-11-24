@@ -10,6 +10,7 @@ from messente.api import utils
 
 
 error_map = ERROR_CODES.copy()
+
 error_map.update({
     "ERROR 104": "Country was not found.",
     "ERROR 105": "This country is not supported",

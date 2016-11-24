@@ -41,9 +41,10 @@ def test_get_coutry_prices():
 
 @responses.activate
 def test_get_pricelist():
+    fake = "test,test,test"
     responses.add_callback(
         responses.GET, utils.TEST_ANY_URL,
-        callback=utils.mock_response(200, fake_response, headers={
+        callback=utils.mock_response(200, fake, headers={
             "Content-type": "text/csv;charset=UTF-8"
         }),
     )
@@ -56,6 +57,7 @@ def test_get_pricelist():
     assert r.is_ok()
     assert len(r.get_result())
 
-    r = api.get_country_prices("EE", format="xml")
-    # only test if ok - only json is mocked
-    assert r.is_ok()
+    # test the contents of the saved file
+    with open(path, "r") as fh:
+        contents = fh.read().strip()
+        assert contents == fake
