@@ -26,7 +26,7 @@ class TestValidate(unittest.TestCase):
             "pin": "",
             "verification_id": "",
         }
-        (ok, errors) = self.api._validate(data, mode="pin")
+        (ok, errors) = self.api._validate(data, mode="verify_pin")
         self.assertFalse(ok)
         self.assertIsInstance(errors, dict)
 
@@ -36,11 +36,11 @@ class TestValidate(unittest.TestCase):
             expected = {f: "Required '%s'" % f}
             data = self.correct_data.copy()
             data.update({f: None})
-            (ok, errors) = self.api._validate(data, mode="pin")
+            (ok, errors) = self.api._validate(data, mode="verify_pin")
             self.assertFalse(ok)
             self.assertDictEqual(errors, expected)
             del data[f]
-            (ok, errors) = self.api._validate(data, mode="pin")
+            (ok, errors) = self.api._validate(data, mode="verify_pin")
             self.assertDictEqual(errors, expected)
 
     def test_field_values(self):
@@ -58,11 +58,11 @@ class TestValidate(unittest.TestCase):
             data = self.correct_data.copy()
             for item in cases[field]["invalid"]:
                 data.update({field: item})
-                (ok, errors) = self.api._validate(data, mode="pin")
+                (ok, errors) = self.api._validate(data, mode="verify_pin")
                 self.assertFalse(ok, "'%s' is invalid" % field)
 
             for item in cases[field]["valid"]:
                 data.update({field: item})
-                (ok, errors) = self.api._validate(data, mode="pin")
+                (ok, errors) = self.api._validate(data, mode="verify_pin")
                 self.assertTrue(ok)
                 self.assertNotIn(field, errors)

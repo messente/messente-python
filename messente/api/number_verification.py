@@ -28,8 +28,8 @@ class NumberVerificationResponse(Response):
     _THROTTLED = "THROTTLED"
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         self._verification_id = kwargs.pop("verification_id", "")
+        super().__init__(*args, **kwargs)
 
     def _get_error_map(self):
         return error_map
@@ -73,9 +73,9 @@ class NumberVerificationAPI(api.API):
     def __init__(self, **kwargs):
         super().__init__("number-verification", **kwargs)
 
-    def verify_start(self, data, **kwargs):
+    def send_pin(self, data, **kwargs):
         if kwargs.get("validate", True):
-            self.validate(data, mode="start", fatal=True)
+            self.validate(data, mode="send_pin", fatal=True)
         r = NumberVerificationResponse(
             self.call_api(
                 "verify/start",
@@ -87,13 +87,12 @@ class NumberVerificationAPI(api.API):
 
     def verify_pin(self, data, **kwargs):
         if kwargs.pop("validate", True):
-            self.validate(data, mode="pin", fatal=True)
+            self.validate(data, mode="verify_pin", fatal=True)
         r = NumberVerificationResponse(
             self.call_api(
                 "verify/pin",
                 **data
-            ),
-            verification_id=data.get("verification_id")
+            )
         )
         self.log_response(r)
         return r
@@ -101,7 +100,7 @@ class NumberVerificationAPI(api.API):
     def _validate(self, data, **kwargs):
         errors = {}
 
-        if kwargs.get("mode", "") == "start":
+        if kwargs.get("mode", "") == "send_pin":
             if not data.get("to", ""):
                 self.set_error_required(errors, "to")
 
@@ -123,7 +122,7 @@ class NumberVerificationAPI(api.API):
                 is_positive_int = str(data["validity"]).isdigit()
                 if not is_positive_int or validity > 1800:
                     self.set_error(errors, "validity")
-        elif kwargs.get("mode", "") == "pin":
+        elif kwargs.get("mode", "") == "verify_pin":
             pin = data.get("pin", "")
             if not pin:
                 self.set_error_required(errors, "pin")
