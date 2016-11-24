@@ -6,6 +6,7 @@ from messente.api import api
 from messente.api.response import Response
 from messente.api.error import ApiError
 from messente.api.error import ERROR_CODES
+from messente.api import utils
 
 
 error_map = ERROR_CODES.copy()
@@ -47,7 +48,12 @@ class PricingAPI(api.API):
         self.log_response(r)
         return r
 
-    def get_pricelist(self):
+    def get_pricelist(self, output_file=None):
         r = PricingResponse(self.call_api("pricelist"))
         self.log_response(r)
+        if output_file:
+            if utils.write_file(output_file, r.get_raw_text()):
+                self.log.info("Price list saved to: %s", output_file)
+            else:
+                self.log.error("Could not save price list")
         return r

@@ -1,5 +1,6 @@
 import responses
 import json
+import tempfile
 
 from test import utils
 
@@ -47,8 +48,9 @@ def test_get_pricelist():
         }),
     )
 
+    (fh, path) = tempfile.mkstemp()
     api = pricing.PricingAPI(api_url=utils.TEST_URL)
-    r = api.get_pricelist()
+    r = api.get_pricelist(path)
     assert isinstance(r, Response)
     assert isinstance(r, pricing.PricingResponse)
     assert r.is_ok()
