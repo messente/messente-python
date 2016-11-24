@@ -10,6 +10,7 @@ class Response(object):
         self.error_msg = ""
         self.http_status_code = None
         self.status = ""
+        self.status_text = ""
         self.parse()
 
     def parse(self):
@@ -17,9 +18,10 @@ class Response(object):
             return
 
         self.http_status_code = int(self.raw_response.status_code)
-        if self.http_status_code not in [200]:
-            return
+        if self.http_status_code in [200]:
+            self._parse()
 
+    def _parse(self):
         is_simple = (
             self.raw_response.text.startswith("OK ") or
             self.raw_response.text.startswith("ERROR ") or
@@ -34,6 +36,8 @@ class Response(object):
                     self.error_code = int(parts[1])
                     k = self.status + " " + str(self.error_code)
                     self.error_msg = self._get_error_map().get(k , "")
+                elif len(parts) > 1:
+                    self.status_text = " ".join(parts[1:])
         else:
             self.status = "OK"
 

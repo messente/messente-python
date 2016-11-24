@@ -6,6 +6,7 @@ import requests
 from messente.logging import Logger
 from messente.api import config
 from messente.api.error import ConfigurationError
+from messente.api.error import InvalidMessageError
 
 
 class API(Logger):
@@ -113,3 +114,19 @@ class API(Logger):
             self.log.error(r.get_full_error_msg())
         else:
             self.log.debug(r.get_raw_text())
+
+    def validate(self, data, **kwargs):
+        (ok, errors) = self._validate(data, **kwargs)
+        if not ok:
+            for field in errors:
+                self.log.error("%s: %s", field, errors[field])
+                raise InvalidMessageError("Message is invalid")
+
+    def _validate(self, data, **kwargs):
+        return (True, {})
+
+    def set_error(self, errors, field, msg=None):
+        errors[field] = (msg or "Invalid '%s'" % field)
+
+    def set_error_required(self, errors, field, msg=None):
+        errors[field] = (msg or "Required '%s'" % field)

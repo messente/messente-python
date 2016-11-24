@@ -60,11 +60,7 @@ class SmsAPI(api.API):
 
     def send(self, data, **kwargs):
         if kwargs.get("validate", True):
-            (ok, errors) = self.validate(data)
-            if not ok:
-                for field in errors:
-                    self.log.error("%s: %s", field, errors[field])
-                    raise InvalidMessageError("Message is invalid")
+            self.validate(data)
 
         r = SmsResponse(self.call_api("send_sms", **data))
         self.log_response(r)
@@ -75,41 +71,40 @@ class SmsAPI(api.API):
         self.log_response(r)
         return r
 
-    def validate(self, data):
+    def _validate(self, data):
         errors = {}
-        to = data.get("to", "")
-        if not to:
-            errors["to"] = "Required: 'to'"
 
-        text = data.get("text", "")
-        if not text:
-            errors["text"] = "Required: 'text'"
+        if not data.get("to", ""):
+            self.set_error_required(errors, "to")
+
+        if not data.get("text", ""):
+            self.set_error_required(errors, "text")
 
         time_to_send = data.get("time_to_send", None)
         if time_to_send is not None:
             is_int = utils.is_int(time_to_send)
             if not is_int or not utils.ge_epoch(int(time_to_send)):
-                errors["time_to_send"] = "Invalid 'time_to_send'"
+                self.set_error(errors, "time_to_send")
 
         validity = data.get("validity", None)
-        if validity is not None and not str(data["validity"]).isdigit():
-            errors["validity"] = "Invalid 'validity'"
+        if validity is not None and not str(validity).isdigit():
+            self.set_error(errors, "validity")
 
         autoconvert = data.get("autoconvert", None)
         if autoconvert is not None and autoconvert not in ["on", "off", "full"]:
-            errors["autoconvert"] = "Invalid 'autoconvert'"
+            self.set_error(errors, "autoconvert")
 
         udh = data.get("udh", None)
         if udh is not None and udh not in ["MS", "UE"]:
-            errors["udh"] = "Invalid 'udh'"
+            self.set_error(errors, "udh")
 
         mclass = data.get("mclass", None)
         if mclass is not None and mclass not in [0, 1, 2, 3]:
-            errors["mclass"] = "Invalid 'mclass'"
+            self.set_error(errors, "mclass")
 
         text_store = data.get("text-store", None)
         isset = text_store is not None
         if isset and text_store not in ["plaintext", "sha256", "nostore"]:
-            errors["text-store"] = "Invalid 'text-store'"
+            self.set_error(errors, "text-store")
 
         return (not len(errors), errors)

@@ -6,3 +6,4 @@ from . import sms
 from . import credit
 from . import delivery
 from . import pricing
+from . import number_verification

@@ -13,3 +13,6 @@ class Messente(object):
         self.credit = api.credit.CreditAPI(**kwargs)
         self.delivery = api.delivery.DeliveryAPI(**kwargs)
         self.pricing = api.pricing.PricingAPI(**kwargs)
+        self.number_verification = (
+            api.number_verification.NumberVerificationAPI(**kwargs)
+        )

@@ -1,11 +1,14 @@
 import unittest
 import time
-from messente.api import sms
+from messente.api import number_verification
 
 
 class TestValidate(unittest.TestCase):
     def setUp(self):
-        self.api = sms.SmsAPI(urls="https://test-sms-validate.example.com")
+        self.api = number_verification.NumberVerificationAPI(
+            urls="https://test-sms-validate.example.com"
+        )
+
         self.correct_data = {
             "to": "+37212345678",
             "text": "test",
@@ -24,12 +27,10 @@ class TestValidate(unittest.TestCase):
 
     def test_validation_errors(self):
         data = {
-            "time_to_send": 123,
-            "validity": -1,
-            "autoconvert": "invalid",
-            "udh": "invalid value",
-            "mclass": 4,
-            "text-store": "invalid",
+            "template": "test",
+            "max_tries": "abc",
+            "retry_delay": "xxx",
+            "validity": "zzz",
         }
         (ok, errors) = self.api._validate(data)
         self.assertFalse(ok)
@@ -37,13 +38,10 @@ class TestValidate(unittest.TestCase):
 
         expected = {
             "to": "Required 'to'",
-            "text": "Required 'text'",
-            "time_to_send": "Invalid 'time_to_send'",
+            "template": "Invalid 'template'",
+            "max_tries": "Invalid 'max_tries'",
+            "retry_delay": "Invalid 'retry_delay'",
             "validity": "Invalid 'validity'",
-            "autoconvert": "Invalid 'autoconvert'",
-            "udh": "Invalid 'udh'",
-            "mclass": "Invalid 'mclass'",
-            "text-store": "Invalid 'text-store'",
         }
 
         self.assertEqual(sorted(expected.keys()), sorted(errors.keys()))
@@ -52,7 +50,7 @@ class TestValidate(unittest.TestCase):
             self.assertEqual(errors[field], expected[field])
 
     def test_required_fields(self):
-        fields = ["to", "text"]
+        fields = ["to"]
         for f in fields:
             expected = {f: "Required '%s'" % f}
             data = self.correct_data.copy()
@@ -70,29 +68,21 @@ class TestValidate(unittest.TestCase):
                 "invalid": ["", None, {}, [], 0],
                 "valid": ["+372123123123"],
             },
-            "time_to_send": {
-                "invalid": ["", "asd", {}, [], -1, 0, time.time() - 1],
-                "valid": [None, time.time() + 1, time.time() + 100],
+            "template": {
+                "invalid": ["", "missing <pin> upper", -1, 3.14, True, False],
+                "valid": [None, "Test <PIN>"],
+            },
+            "max_tries": {
+                "invalid": ["", "asd", -1, 0, True, False],
+                "valid": [None, 2, 100],
+            },
+            "retry_delay": {
+                "invalid": ["", "asd", -1, True, False],
+                "valid": [None, 2, 100],
             },
             "validity": {
-                "invalid": ["", "asd", {}, [], -1, 123.23],
-                "valid": [None, 0, 10, 360],
-            },
-            "autoconvert": {
-                "invalid": [{}, [], "", "invalid", 5, 6.1],
-                "valid": [None, "on", "off", "full"],
-            },
-            "udh": {
-                "invalid": [{}, [], "", "invalid", 3.14, 12, -10],
-                "valid": [None, "MS", "UE"],
-            },
-            "mclass": {
-                "invalid": [{}, [], "", "invalid", 3.14, 4, -1],
-                "valid": [None, 0, 1, 2, 3],
-            },
-            "text-store": {
-                "invalid": [{}, [], "", "invalid", 3.14, 4, -1],
-                "valid": [None, "plaintext", "sha256", "nostore"],
+                "invalid": ["", "asd", -1, 3.14, 1801, True, False],
+                "valid": [None, 0, 100, 1800],
             },
         }
         for field in cases:
