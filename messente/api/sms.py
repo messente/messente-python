@@ -59,7 +59,7 @@ class SmsAPI(api.API):
         super().__init__("sms", **kwargs)
 
     def send(self, data, **kwargs):
-        if kwargs.get("validate", True):
+        if kwargs.pop("validate", True):
             self.validate(data)
 
         r = SmsResponse(self.call_api("send_sms", **data))
@@ -71,7 +71,7 @@ class SmsAPI(api.API):
         self.log_response(r)
         return r
 
-    def _validate(self, data):
+    def _validate(self, data, **kwargs):
         errors = {}
 
         if not data.get("to", ""):

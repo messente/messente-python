@@ -21,7 +21,10 @@ class TestValidate(unittest.TestCase):
         }
 
     def test_validation_pass(self):
-        (ok, errors) = self.api._validate(self.correct_data)
+        (ok, errors) = self.api._validate(
+            self.correct_data,
+            mode="verify_start"
+        )
         self.assertTrue(ok)
         self.assertDictEqual(errors, {})
 
@@ -32,7 +35,7 @@ class TestValidate(unittest.TestCase):
             "retry_delay": "xxx",
             "validity": "zzz",
         }
-        (ok, errors) = self.api._validate(data)
+        (ok, errors) = self.api._validate(data, mode="start")
         self.assertFalse(ok)
         self.assertIsInstance(errors, dict)
 
@@ -55,11 +58,11 @@ class TestValidate(unittest.TestCase):
             expected = {f: "Required '%s'" % f}
             data = self.correct_data.copy()
             data.update({f: None})
-            (ok, errors) = self.api._validate(data)
+            (ok, errors) = self.api._validate(data, mode="start")
             self.assertFalse(ok)
             self.assertDictEqual(errors, expected)
             del data[f]
-            (ok, errors) = self.api._validate(data)
+            (ok, errors) = self.api._validate(data, mode="start")
             self.assertDictEqual(errors, expected)
 
     def test_field_values(self):
@@ -89,11 +92,11 @@ class TestValidate(unittest.TestCase):
             data = self.correct_data.copy()
             for item in cases[field]["invalid"]:
                 data.update({field: item})
-                (ok, errors) = self.api._validate(data)
+                (ok, errors) = self.api._validate(data, mode="start")
                 self.assertFalse(ok, "'%s' is invalid" % field)
 
             for item in cases[field]["valid"]:
                 data.update({field: item})
-                (ok, errors) = self.api._validate(data)
+                (ok, errors) = self.api._validate(data, mode="start")
                 self.assertTrue(ok)
                 self.assertNotIn(field, errors)
