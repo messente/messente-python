@@ -8,8 +8,8 @@ from messente.api.error import InvalidMessageError
 from messente.api.error import ERROR_CODES
 
 
-error_map = ERROR_CODES.copy()
-error_map.update({
+sms_error_map = ERROR_CODES.copy()
+sms_error_map.update({
     "ERROR 104": " ".join([
         "Destination country for this number was not found."
     ]),
@@ -25,18 +25,31 @@ error_map.update({
     ]),
 })
 
+cancel_sms_error_map = ERROR_CODES.copy()
+cancel_sms_error_map.update({
+    "ERROR 107": "Could not find message with provided message ID."
+})
+
 
 class SmsResponse(Response):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def _get_error_map(self):
-        return error_map
+        return sms_error_map
 
     def get_sms_id(self):
         if self.is_ok():
             return self.get_raw_text().split(" ")[1]
         return None
+
+
+class CancelSmsResponse(Response):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _get_error_map(self):
+        return cancel_sms_error_map
 
 
 class SmsAPI(api.API):
@@ -58,7 +71,7 @@ class SmsAPI(api.API):
         return r
 
     def cancel(self, sms_id):
-        r = SmsResponse(self.call_api("cancel_sms", sms_unique_id=sms_id))
+        r = CancelSmsResponse(self.call_api("cancel_sms", sms_unique_id=sms_id))
         self.log_response(r)
         return r
 

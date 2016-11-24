@@ -88,6 +88,9 @@ def test_cancel():
     api = sms.SmsAPI(api_url=utils.TEST_URL)
     r = api.cancel("sms-id")
 
+    assert isinstance(r, Response)
+    assert isinstance(r, sms.CancelSmsResponse)
+
     assert r.error_code is None
     assert r.error_msg == ""
     assert r.status == "OK"
