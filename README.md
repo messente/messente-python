@@ -17,7 +17,7 @@ import messente
 api = messente.Messente(
     username="me",
     password="xxx",
-	api_url="https://xxx",
+	urls=["https://api2.messente.com", "https://api3.messente.com"],
 	ini_path="config.ini"
 )
 
@@ -25,6 +25,5 @@ api = messente.Messente(
 or they can be read from *.ini configuration file pointed by "ini_path" keyword argument.
 
 Some parameters can be passed as environment variables:
-- MESSENTE_API_URL (defaults to https://api2.messente.com)
 - MESSENTE_API_USERNAME
 - MESSENTE_API_PASSWORD

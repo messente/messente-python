@@ -16,7 +16,7 @@ class Logger(object):
     def __init__(self, name=None, **kwargs):
         self.log = log.getChild((name or self.__class__.__name__))
 
-        if kwargs.pop("debug", False):
+        if kwargs.pop("log_debug", False):
             self.log.setLevel(logging.DEBUG)
 
         formatter = DEFAULT_FORMATTER
@@ -26,7 +26,7 @@ class Logger(object):
             )
 
         handlers = []
-        if kwargs.pop("stdout", False):
+        if kwargs.pop("log_stdout", False):
             handlers.append(logging.StreamHandler(stream=sys.stdout))
 
         log_file = kwargs.pop("log_file")

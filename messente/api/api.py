@@ -24,19 +24,25 @@ class API(Logger):
             bool: config.configuration.getboolean,
         }
 
-        super().__init__(
-            stdout=self.get_bool_option("log_stdout", False),
-            debug=self.get_bool_option("log_debug", False),
-            log_format=self.get_option("log_format", None),
-            log_file=self.get_option("log_file"),
+        params = dict(
+            log_stdout=bool,
+            log_debug=bool,
+            log_format=str,
+            log_file=str,
         )
-        overrides = {
+
+        for p in params:
+            params[p] = kwargs.pop(p, self.get_option(p, data_type=params[p]))
+
+        super().__init__(**params)
+
+        env_overrides = {
             "username": "MESSENTE_API_USERNAME",
             "password": "MESSENTE_API_PASSWORD",
         }
 
-        for option in overrides:
-            value = kwargs.pop(option, os.getenv(overrides[option], ""))
+        for option in env_overrides:
+            value = kwargs.pop(option, os.getenv(env_overrides[option], ""))
             if value:
                 config.configuration[self._config_section][option] = value
         self.api_urls = []
