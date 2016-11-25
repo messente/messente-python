@@ -1,7 +1,11 @@
 import time
 import os
+import re
 
 from messente.logging import log
+
+
+PHONE_REPLACE_RE = re.compile("(\+|-|_|\.|\s)*")
 
 
 def is_int(value):
@@ -27,3 +31,12 @@ def write_file(path, contents, **kwargs):
     except OSError as e:
         log.exception(e)
     return False
+
+
+def adapt_phone_number(phone):
+    return PHONE_REPLACE_RE.sub("", (phone or "").strip())
+
+
+def is_phone_number_valid(phone):
+    s = str(phone)
+    return (s.isdigit() and 9 < len(s) < 16)

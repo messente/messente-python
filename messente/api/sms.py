@@ -1,10 +1,8 @@
 from __future__ import absolute_import
 
-from messente.api import config
 from messente.api import api
 from messente.api import utils
 from messente.api.response import Response
-from messente.api.error import InvalidMessageError
 from messente.api.error import ERROR_CODES
 
 
@@ -62,6 +60,7 @@ class SmsAPI(api.API):
         super().__init__("sms", **kwargs)
 
     def send(self, data, **kwargs):
+        self.adapt()
         if kwargs.pop("validate", True):
             self.validate(data, fatal=True)
 
@@ -74,11 +73,19 @@ class SmsAPI(api.API):
         self.log_response(r)
         return r
 
+    def adapt(self, data):
+        data["to"] = utils.adapt_phone_number(data.get("to", ""))
+        return data
+
     def _validate(self, data, **kwargs):
+        self.adapt(data)
         errors = {}
 
-        if not data.get("to", ""):
+        to = data.get("to", "")
+        if not to:
             self.set_error_required(errors, "to")
+        elif not utils.is_phone_number_valid(to):
+            self.set_error(errors, "to")
 
         if not data.get("text", ""):
             self.set_error_required(errors, "text")

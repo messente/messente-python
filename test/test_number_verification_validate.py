@@ -68,8 +68,19 @@ class TestValidate(unittest.TestCase):
     def test_field_values(self):
         cases = {
             "to": {
-                "invalid": ["", None, {}, [], 0],
-                "valid": ["+372123123123"],
+                "invalid": [
+                    "", None, {}, [], 0, "abc",
+                    "+3721234567a1231",
+                    "+3721234567890123",
+                    "+372-123-456-789-0123",
+                ],
+                "valid": [
+                    "+3721234567890",
+                    " + 372 123 234 345 ",
+                    "12345678912345",
+                    "+12345678912345-",
+                    "+-372-123-456 789 123",
+                ],
             },
             "template": {
                 "invalid": ["", "missing <pin> upper", -1, 3.14, True, False],
@@ -92,11 +103,15 @@ class TestValidate(unittest.TestCase):
             data = self.correct_data.copy()
             for item in cases[field]["invalid"]:
                 data.update({field: item})
-                (ok, errors) = self.api._validate(data, mode="send_pin")
+                (ok, errors) = self.api.validate(
+                    data, mode="send_pin", fatal=False
+                )
                 self.assertFalse(ok, "'%s' is invalid" % field)
 
             for item in cases[field]["valid"]:
                 data.update({field: item})
-                (ok, errors) = self.api._validate(data, mode="send_pin")
+                (ok, errors) = self.api.validate(
+                    data, mode="send_pin", fatal=False
+                )
                 self.assertTrue(ok)
                 self.assertNotIn(field, errors)

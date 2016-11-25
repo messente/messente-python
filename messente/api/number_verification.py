@@ -1,12 +1,10 @@
 from __future__ import absolute_import
 
 
-from messente.api import config
 from messente.api import api
-from messente.api.response import Response
-from messente.api.error import ApiError
-from messente.api.error import ERROR_CODES
 from messente.api import utils
+from messente.api.response import Response
+from messente.api.error import ERROR_CODES
 
 
 error_map = ERROR_CODES.copy()
@@ -79,6 +77,7 @@ class NumberVerificationAPI(api.API):
         super().__init__("number-verification", **kwargs)
 
     def send_pin(self, data, **kwargs):
+        self.adapt(data)
         if kwargs.get("validate", True):
             self.validate(data, mode="send_pin", fatal=True)
         r = NumberVerificationResponse(
@@ -102,12 +101,20 @@ class NumberVerificationAPI(api.API):
         self.log_response(r)
         return r
 
+    def adapt(self, data):
+        data["to"] = utils.adapt_phone_number(data.get("to", ""))
+        return data
+
     def _validate(self, data, **kwargs):
+        self.adapt(data)
         errors = {}
 
         if kwargs.get("mode", "") == "send_pin":
-            if not data.get("to", ""):
+            to = data.get("to", "")
+            if not to:
                 self.set_error_required(errors, "to")
+            elif not utils.is_phone_number_valid(to):
+                self.set_error(errors, "to")
 
             template = data.get("template", None)
             if template is not None and "<PIN>" not in str(template):

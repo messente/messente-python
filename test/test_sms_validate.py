@@ -67,8 +67,8 @@ class TestValidate(unittest.TestCase):
     def test_field_values(self):
         cases = {
             "to": {
-                "invalid": ["", None, {}, [], 0],
-                "valid": ["+372123123123"],
+                "invalid": ["", None, {}, [], 0, "abcde"],
+                "valid": ["+372123123123", "0123456-7890"],
             },
             "time_to_send": {
                 "invalid": ["", "asd", {}, [], -1, 0, time.time() - 1],
@@ -99,11 +99,11 @@ class TestValidate(unittest.TestCase):
             data = self.correct_data.copy()
             for item in cases[field]["invalid"]:
                 data.update({field: item})
-                (ok, errors) = self.api._validate(data)
+                (ok, errors) = self.api.validate(data, fatal=False)
                 self.assertFalse(ok, "'%s' is invalid" % field)
 
             for item in cases[field]["valid"]:
                 data.update({field: item})
-                (ok, errors) = self.api._validate(data)
+                (ok, errors) = self.api.validate(data, fatal=False)
                 self.assertTrue(ok)
                 self.assertNotIn(field, errors)

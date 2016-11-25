@@ -11,6 +11,7 @@ from messente.api.error import InvalidMessageError
 
 class API(Logger):
     """Base class for Messente apis."""
+
     def __init__(self, config_section, **kwargs):
         self._config_section = config_section
         for section in ["default", self._config_section]:
@@ -49,7 +50,6 @@ class API(Logger):
                 config.configuration[self._config_section][option] = value
         self.api_urls = []
         self.set_urls(kwargs.pop("urls", None))
-        self.log.info("Initialized")
 
     def set_urls(self, urls=None):
         if not urls:
@@ -142,3 +142,6 @@ class API(Logger):
 
     def set_error_required(self, errors, field, msg=None):
         errors[field] = (msg or "Required '%s'" % field)
+
+    def adapt(self, data):
+        return data
