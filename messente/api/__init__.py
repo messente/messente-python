@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from . import error
 from .response import Response
 
@@ -7,3 +9,4 @@ from . import credit
 from . import delivery
 from . import pricing
 from . import number_verification
+from . import verification_widget

@@ -16,3 +16,6 @@ class Messente(object):
         self.number_verification = (
             api.number_verification.NumberVerificationAPI(**kwargs)
         )
+        self.verification_widget = (
+            api.verification_widget.VerificationWidgetAPI(**kwargs)
+        )

@@ -1,14 +1,28 @@
 import messente
+
 import os
+import sys
 import logging
 import time
 
+# process input parameters
+if len(sys.argv) < 3:
+    print("Usage: %s PHONE_NO TEXT [DELAY]" % sys.argv[0])
+    sys.exit(1)
+
+delay = 0
+if len(sys.argv) == 4:
+    delay = sys.argv[3]
+
 sms_data = {
-    "to": os.environ["TEST_RECIPIENT"],
-    "text": "test",
-    "time_to_send": int(time.time()) + 10,
+    "to": sys.argv[0],
+    "text": sys.argv[1],
 }
 
+if delay:
+    sms_data.update({"time_to_send": int(time.time()) + delay})
+
+# process sms
 api = messente.Messente(log_stdout=False)
 logging.disable(logging.ERROR)
 api.sms.log.setLevel(logging.CRITICAL)
@@ -31,6 +45,7 @@ if ok:
     print("Cancel:", response.get_result())
 
 
+# Validation examples
 print("# Validation")
 try:
     # when trying to send invalid message, an exception is raised

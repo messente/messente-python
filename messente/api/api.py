@@ -59,11 +59,20 @@ class API(Logger):
             urls = urls.split(" ")
         self.api_urls = [url.strip() for url in urls]
 
-    def call_api(self, endpoint, method="GET", **data):
-        if not self.api_urls:
+    def call_api(self, endpoint, data=None, **kwargs):
+        data = (data or {})
+        method = kwargs.pop("method", "GET")
+        custom_api_url = kwargs.pop("api_url", None)
+        api_urls = []
+        if custom_api_url:
+            api_urls.append(custom_api_url)
+        else:
+            api_urls.extend(self.api_urls)
+        if not api_urls:
             raise ConfigurationError("No urls configured")
-        # first succesful url makes the function return
-        for url in self.api_urls:
+
+        # first url that yields any response makes the function return
+        for url in api_urls:
             url = "{url}/{endpoint}".format(url=url, endpoint=endpoint)
             data.update(dict(
                 username=self.get_option("username"),
