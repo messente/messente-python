@@ -68,8 +68,13 @@ class NumberVerificationResponse(Response):
 
 
 class NumberVerificationAPI(api.API):
-    """https://messente.com/documentation/tools/verification-api"""
+    """
+    Api supporting PIN code based user verification.
 
+    Documentation:
+    http://messente.com/documentation/number-verification/number-verification-api
+
+    """
     def __init__(self, **kwargs):
         super().__init__("number-verification", **kwargs)
 

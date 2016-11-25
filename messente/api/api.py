@@ -10,6 +10,7 @@ from messente.api.error import InvalidMessageError
 
 
 class API(Logger):
+    """Base class for Messente apis."""
     def __init__(self, config_section, **kwargs):
         self._config_section = config_section
         for section in ["default", self._config_section]:

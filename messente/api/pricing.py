@@ -27,7 +27,10 @@ class PricingResponse(Response):
 
 
 class PricingAPI(api.API):
-    """https://messente.com/documentation/tools/pricing-api"""
+    """
+    Documentation:
+    http://messente.com/documentation/tools/pricing-api
+    """
 
     def __init__(self, **kwargs):
         super().__init__("pricing", **kwargs)

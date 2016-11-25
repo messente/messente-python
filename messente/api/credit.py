@@ -16,7 +16,10 @@ class CreditResponse(Response):
 
 
 class CreditAPI(api.API):
-    """Documentation: http://messente.com/documentation/credits-api"""
+    """
+    Documentation:
+    http://messente.com/documentation/tools/credits-api
+    """
 
     def __init__(self, **kwargs):
         super().__init__("credit", **kwargs)

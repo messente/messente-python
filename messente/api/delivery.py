@@ -26,7 +26,10 @@ class DeliveryResponse(Response):
 
 
 class DeliveryAPI(api.API):
-    """Documentation: http://messente.com/documentation/delivery-report"""
+    """
+    Documentation:
+    http://messente.com/documentation/sms-messaging/delivery-report
+    """
 
     def __init__(self, **kwargs):
         super().__init__("delivery", **kwargs)

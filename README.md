@@ -170,6 +170,13 @@ Authentication parameters can also be set in environment instead:
 ### Configuration file
 
 Configuration can be stored in a *.ini file (please see config.sample.ini).
+The path to the file can be passed to a contructor as "ini_path" keyword argument:
+
+```python
+    import messente
+    api = messente.Messente(ini_path="some/path/filename.ini"")
+```
+
 Configuration file is divided into following sections:
 - default
 - sms

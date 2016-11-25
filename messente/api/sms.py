@@ -53,7 +53,10 @@ class CancelSmsResponse(Response):
 
 
 class SmsAPI(api.API):
-    """Documentation: http://messente.com/documentation/sending-sms"""
+    """
+    Documentation:
+    http://messente.com/documentation/sending-sms
+    """
 
     def __init__(self, **kwargs):
         super().__init__("sms", **kwargs)
