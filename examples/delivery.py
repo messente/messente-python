@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import messente
 
 api = messente.Messente(username="api_user", password="api_password")

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import responses
 
 from test import utils
