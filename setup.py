@@ -8,7 +8,7 @@ setup(
     packages=["messente"],
     # metadata for upload to PyPI
     author="Messente.com",
-    author_email="dev@messente.com",
+    author_email="support@messente.com",
     description="Official Messente API python library",
     # license="",
     keywords="messente sms verification 2fa pincode",
