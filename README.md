@@ -27,6 +27,8 @@ You can find sample scripts in the 'examples' directory.
 
 ```
 
+More: http://messente.com/documentation/sms-messaging/sending-sms
+
 #### Advanced example
 
 A little more advanced example including validation, error handling
@@ -70,6 +72,8 @@ and cancelling a message can be demonstrated as:
 
 ```
 
+More: http://messente.com/documentation/sms-messaging/sending-sms
+
 
 ### CreditsAPI
 
@@ -84,6 +88,8 @@ and cancelling a message can be demonstrated as:
         print(response.get_full_error_msg())
 
 ```
+
+More: http://messente.com/documentation/tools/credits-api
 
 ### PricingAPI
 
@@ -111,10 +117,11 @@ and cancelling a message can be demonstrated as:
         print("Pricelist saved in:", filename)
 ```
 
+More: http://messente.com/documentation/tools/pricing-api
 
-### NumberVerificationAPI
+### NumberVerificationAPI (pin code based verification)
 
-Sending ping code to a number:
+Sending PIN code to a number:
 
 ```python
     api = messente.Messente()
@@ -147,6 +154,8 @@ Verifying PIN code:
     print("INVALID:\t", response.is_invalid())
 ```
 
+More: http://messente.com/documentation/number-verification/number-verification-api
+
 
 ## Configuration parameters
 
@@ -158,7 +167,19 @@ Authentication parameters can also be set in environment instead:
 - **MESSENTE_API_USERNAME**
 - **MESSENTE_API_PASSWORD**
 
+### Configuration file
 
+Configuration can be stored in a *.ini file (please see config.sample.ini).
+Configuration file is divided into following sections:
+- default
+- sms
+- delivery
+- credit
+- pricing
+- number-verification
+
+All the module specific sections can override any of
+the parameters in the "default" section.
 
 ## Running unittests tests
 
