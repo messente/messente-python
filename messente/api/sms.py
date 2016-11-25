@@ -60,7 +60,7 @@ class SmsAPI(api.API):
         super().__init__("sms", **kwargs)
 
     def send(self, data, **kwargs):
-        self.adapt()
+        self.adapt(data)
         if kwargs.pop("validate", True):
             self.validate(data, fatal=True)
 
