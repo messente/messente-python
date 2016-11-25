@@ -18,7 +18,7 @@ error_map.update({
 
 class DeliveryResponse(Response):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        Response.__init__(self, *args, **kwargs)
 
     def _get_error_map(self):
         return error_map
@@ -34,7 +34,7 @@ class DeliveryAPI(api.API):
     """
 
     def __init__(self, **kwargs):
-        super().__init__("delivery", **kwargs)
+        api.API.__init__(self, "delivery", **kwargs)
 
     def get_dlr_response(self, sms_id):
         r = DeliveryResponse(

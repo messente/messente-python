@@ -22,7 +22,7 @@ error_map.update({
 
 class PricingResponse(Response):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        Response.__init__(self, *args, **kwargs)
 
     def _get_error_map(self):
         return error_map
@@ -35,7 +35,7 @@ class PricingAPI(api.API):
     """
 
     def __init__(self, **kwargs):
-        super().__init__("pricing", **kwargs)
+        api.API.__init__(self, "pricing", **kwargs)
 
     def get_country_prices(self, country_code, **kwargs):
         response_format = kwargs.pop("format", "json")

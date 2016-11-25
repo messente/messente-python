@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import absolute_import
 
 import os
@@ -6,25 +7,34 @@ from messente.api.error import ConfigurationError
 from messente.logging import DEFAULT_LOG_FORMAT
 from messente.logging import log
 
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-
+from six.moves import configparser
 
 configuration = configparser.SafeConfigParser()
 
-configuration["default"] = dict(
-    urls="https://api2.messente.com",
-    username=os.getenv("MESSENTE_API_USERNAME", ""),
-    password=os.getenv("MESSENTE_API_PASSWORD", ""),
-    log_stdout=False,
-    log_debug=False,
-    log_format=DEFAULT_LOG_FORMAT.replace("%", "%%"),
-)
-
+configuration.add_section("api")
 configuration.add_section("sms")
 configuration.add_section("credit")
+
+
+configuration.set("api", "test", "ASD")
+configuration.set(
+    "api",
+    "urls",
+    "https://api2.messente.com https://api3.messente.com"
+)
+
+configuration.set(
+    "api", "username", os.getenv("MESSENTE_API_USERNAME", "")
+)
+configuration.set(
+    "api", "password", os.getenv("MESSENTE_API_PASSWORD", "")
+)
+configuration.set("api", "log_stdout", "false")
+configuration.set("api", "log_debug", "false")
+configuration.set("api", "log_file", "")
+configuration.set(
+    "api", "log_format", DEFAULT_LOG_FORMAT.replace("%", "%%")
+)
 
 
 def load(path):

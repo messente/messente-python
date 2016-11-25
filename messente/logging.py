@@ -30,7 +30,7 @@ class Logger(object):
         if kwargs.pop("log_stdout", False):
             handlers.append(logging.StreamHandler(stream=sys.stdout))
 
-        log_file = kwargs.pop("log_file")
+        log_file = kwargs.pop("log_file", None)
         if log_file:
             d = os.path.dirname(log_file)
             if not os.path.isdir(d):

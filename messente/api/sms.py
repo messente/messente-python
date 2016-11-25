@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function
+from builtins import (bytes, str, open, super, range,
+                      zip, round, input, int, pow, object)
 
 from messente.api import api
 from messente.api import utils

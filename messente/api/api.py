@@ -16,7 +16,7 @@ class API(Logger):
 
     def __init__(self, config_section, **kwargs):
         self._config_section = config_section
-        for section in ["default", self._config_section]:
+        for section in ["api", self._config_section]:
             if not config.configuration.has_section(section):
                 config.configuration.add_section(section)
 
@@ -39,7 +39,7 @@ class API(Logger):
         for p in params:
             params[p] = kwargs.pop(p, self.get_option(p, data_type=params[p]))
 
-        super().__init__(**params)
+        Logger.__init__(self, **params)
 
         env_overrides = {
             "username": "MESSENTE_API_USERNAME",
@@ -49,7 +49,7 @@ class API(Logger):
         for option in env_overrides:
             value = kwargs.pop(option, os.getenv(env_overrides[option], ""))
             if value:
-                config.configuration[self._config_section][option] = value
+                config.configuration.set(self._config_section, option, value)
         self.api_urls = []
         self.set_urls(kwargs.pop("urls", None))
 
@@ -102,13 +102,16 @@ class API(Logger):
 
     def get_option(self, option, default=None, **kwargs):
         data_type = kwargs.pop("data_type", str)
-        default_value = (default or data_type())
-        fallback_section = kwargs.pop("fallback_section", "default")
-        section = self._config_section
-        if not config.configuration.has_option(self._config_section, option):
+        fallback_section = kwargs.pop("fallback_section", "api")
+        cfg = config.configuration
+        if cfg.has_option(self._config_section, option):
+            section = self._config_section
+        elif cfg.has_option(fallback_section, option):
             section = fallback_section
-        getter = self._config_getters[data_type]
-        return getter(section, option, fallback=default_value)
+        else:
+            raise ConfigurationError("No such option: %s" % option)
+        value = self._config_getters[data_type](section, option)
+        return value
 
     def get_str_option(self, *args, **kwargs):
         return self.get_option(*args, **kwargs)

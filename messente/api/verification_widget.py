@@ -10,7 +10,7 @@ class VerificationWidgetAPI(api.API):
     """Documentation: http://messente.com/documentation/verification-widget"""
 
     def __init__(self, **kwargs):
-        super().__init__("verification-widget", **kwargs)
+        api.API.__init__(self, "verification-widget", **kwargs)
 
     def calculate_signature(self, data):
         plain = "".join(map(lambda k: (k) + str(data[k]), sorted(data)))

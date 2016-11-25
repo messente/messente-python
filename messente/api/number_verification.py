@@ -28,7 +28,7 @@ class NumberVerificationResponse(Response):
 
     def __init__(self, *args, **kwargs):
         self._verification_id = kwargs.pop("verification_id", "")
-        super().__init__(*args, **kwargs)
+        Response.__init__(self, *args, **kwargs)
 
     def _get_error_map(self):
         return error_map
@@ -41,7 +41,7 @@ class NumberVerificationResponse(Response):
         if stripped in custom_statuses:
             self.status = stripped
         else:
-            super()._parse()
+            Response._parse(self)
             self._verification_id = self.status_text
 
     def is_ok(self):
@@ -75,7 +75,7 @@ class NumberVerificationAPI(api.API):
 
     """
     def __init__(self, **kwargs):
-        super().__init__("number-verification", **kwargs)
+        api.API.__init__(self, "number-verification", **kwargs)
 
     def send_pin(self, data, **kwargs):
         self.adapt(data)

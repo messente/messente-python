@@ -9,7 +9,7 @@ from messente.api.response import Response
 
 class CreditResponse(Response):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        Response.__init__(self, *args, **kwargs)
 
     def get_result(self):
         if self.is_ok():
@@ -24,7 +24,7 @@ class CreditAPI(api.API):
     """
 
     def __init__(self, **kwargs):
-        super().__init__("credit", **kwargs)
+        api.API.__init__(self, "credit", **kwargs)
 
     def get_balance(self):
         r = CreditResponse(self.call_api("get_balance"))
