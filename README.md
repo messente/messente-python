@@ -1,7 +1,9 @@
 # messente-python
 
-Python API supporting Messente.com services.
-See: http://messente.com/documentation
+Messente.com API library (Python2 and Python3).
+
+Full documentation: http://messente.com/documentation
+
 
 Modules:
 - sms (SmsAPI)
@@ -192,3 +194,24 @@ the parameters in the "default" section.
 
 To run all the unit tests, simply execute:
 ```nosetests -v```
+
+
+## Dependencies
+
+Library:
+- requests
+- future
+- six
+
+Tests:
+- responses
+- nose
+
+```
+pip install -r requirements.txt
+```
+
+
+# LICENSE
+
+Apache Licence, Version 2
