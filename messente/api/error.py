@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class MessenteError(Exception):
     pass
 

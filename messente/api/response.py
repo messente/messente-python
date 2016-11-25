@@ -36,7 +36,7 @@ class Response(object):
                 if self.status in ["ERROR", "FAILED"]:
                     self.error_code = int(parts[1])
                     k = self.status + " " + str(self.error_code)
-                    self.error_msg = self._get_error_map().get(k , "")
+                    self.error_msg = self._get_error_map().get(k, "")
                 elif len(parts) > 1:
                     self.status_text = " ".join(parts[1:])
         else:

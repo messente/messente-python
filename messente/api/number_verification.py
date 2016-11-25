@@ -140,7 +140,7 @@ class NumberVerificationAPI(api.API):
             if not pin:
                 self.set_error_required(errors, "pin")
             else:
-                if not str(pin).isdigit() or not int(pin) :
+                if not str(pin).isdigit() or not int(pin):
                     self.set_error(errors, "pin")
 
             verification_id = data.get("verification_id", None)

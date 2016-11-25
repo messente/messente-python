@@ -71,7 +71,9 @@ class SmsAPI(api.API):
         return r
 
     def cancel(self, sms_id):
-        r = CancelSmsResponse(self.call_api("cancel_sms", sms_unique_id=sms_id))
+        r = CancelSmsResponse(
+            self.call_api("cancel_sms", sms_unique_id=sms_id)
+        )
         self.log_response(r)
         return r
 
@@ -103,7 +105,8 @@ class SmsAPI(api.API):
             self.set_error(errors, "validity")
 
         autoconvert = data.get("autoconvert", None)
-        if autoconvert is not None and autoconvert not in ["on", "off", "full"]:
+        allowed = ["on", "off", "full"]
+        if autoconvert is not None and autoconvert not in allowed:
             self.set_error(errors, "autoconvert")
 
         udh = data.get("udh", None)
