@@ -12,6 +12,21 @@ Modules:
 - pricing (PricingAPI)
 - number_verification / pin codes (NumberVerificationAPI)
 
+## Installation
+
+The library can be installed via pip:
+
+```
+    pip install messente-python
+```
+
+or by using setuptools:
+
+```
+    python setup.py build
+    python setup.py install
+```
+
 
 ## Examples
 
