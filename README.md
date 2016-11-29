@@ -189,7 +189,7 @@ The path to the file can be passed to a contructor as "ini_path" keyword argumen
 
 ```python
     import messente
-    api = messente.Messente(ini_path="some/path/filename.ini"")
+    api = messente.Messente(ini_path="some/path/filename.ini")
 ```
 
 Configuration file is divided into following sections:
