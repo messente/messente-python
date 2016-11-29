@@ -203,6 +203,23 @@ Configuration file is divided into following sections:
 All the module specific sections can override any of
 the parameters in the "default" section.
 
+
+### Logging configuration
+
+The library uses logging module from standard python library, and
+logging should be configured by the application that uses this library.
+For more information, please visit:
+https://docs.python.org/3/howto/logging.html
+
+The following logger names are used by the library:
+- messente
+- messente.SmsAPI
+- messente.CreditAPI
+- messente.PricingAPI
+- messente.DeliveryAPI
+- messente.NumberVerificationAPI
+
+
 ## Running unittests tests
 
 To run all the unit tests, simply execute:
