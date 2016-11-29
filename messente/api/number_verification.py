@@ -99,7 +99,7 @@ class NumberVerificationAPI(api.API):
         r = NumberVerificationResponse(
             self.call_api(
                 "verify/start",
-                **data
+                data
             ),
         )
         self.log_response(r)
@@ -111,7 +111,7 @@ class NumberVerificationAPI(api.API):
         r = NumberVerificationResponse(
             self.call_api(
                 "verify/pin",
-                **data
+                data
             )
         )
         self.log_response(r)

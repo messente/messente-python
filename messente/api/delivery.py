@@ -52,7 +52,7 @@ class DeliveryAPI(api.API):
 
     def get_dlr_response(self, sms_id):
         r = DeliveryResponse(
-            self.call_api("get_dlr_response", sms_unique_id=sms_id)
+            self.call_api("get_dlr_response", dict(sms_unique_id=sms_id))
         )
         self.log_response(r)
         return r

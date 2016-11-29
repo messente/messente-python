@@ -43,12 +43,7 @@ class API(Logger):
             bool: config.configuration.getboolean,
         }
 
-        params = dict(
-            log_stdout=bool,
-            log_debug=bool,
-            log_format=str,
-            log_file=str,
-        )
+        params = dict()
 
         for p in params:
             params[p] = kwargs.pop(p, self.get_option(p, data_type=params[p]))

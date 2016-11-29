@@ -62,8 +62,7 @@ and cancelling a message can be demonstrated as:
         "time_to_send": int(time.time()) + 10,
     }
 
-    api = messente.Messente(log_stdout=False)
-    api.sms.log.setLevel(logging.CRITICAL)
+    api = messente.Messente()
 
     (ok, errors) = api.sms.validate(sms_data)
 

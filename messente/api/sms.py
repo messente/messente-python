@@ -82,13 +82,13 @@ class SmsAPI(api.API):
         if kwargs.pop("validate", True):
             self.validate(data, fatal=True)
 
-        r = SmsResponse(self.call_api("send_sms", **data))
+        r = SmsResponse(self.call_api("send_sms", data))
         self.log_response(r)
         return r
 
     def cancel(self, sms_id):
         r = CancelSmsResponse(
-            self.call_api("cancel_sms", sms_unique_id=sms_id)
+            self.call_api("cancel_sms", dict(sms_unique_id=sms_id))
         )
         self.log_response(r)
         return r

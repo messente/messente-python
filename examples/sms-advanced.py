@@ -14,20 +14,18 @@ if len(sys.argv) < 3:
 
 delay = 0
 if len(sys.argv) == 4:
-    delay = sys.argv[3]
+    delay = int(sys.argv[3])
 
 sms_data = {
-    "to": sys.argv[0],
-    "text": sys.argv[1],
+    "to": sys.argv[1],
+    "text": sys.argv[2],
 }
 
 if delay:
     sms_data.update({"time_to_send": int(time.time()) + delay})
 
 # process sms
-api = messente.Messente(log_stdout=False)
-logging.disable(logging.ERROR)
-api.sms.log.setLevel(logging.CRITICAL)
+api = messente.Messente()
 
 (ok, errors) = api.sms.validate(sms_data)
 

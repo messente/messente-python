@@ -59,8 +59,10 @@ class PricingAPI(api.API):
         r = PricingResponse(
             self.call_api(
                 "prices",
-                country=country_code,
-                format=response_format,
+                {
+                    "country": country_code,
+                    "format": response_format,
+                }
             ),
             format=response_format,
         )

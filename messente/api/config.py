@@ -18,7 +18,6 @@ from __future__ import absolute_import, division, print_function
 
 import os
 from messente.api.error import ConfigurationError
-from messente.logging import DEFAULT_LOG_FORMAT
 from messente.logging import log
 
 from six.moves import configparser
@@ -42,12 +41,6 @@ configuration.set(
 )
 configuration.set(
     "api", "password", os.getenv("MESSENTE_API_PASSWORD", "")
-)
-configuration.set("api", "log_stdout", "false")
-configuration.set("api", "log_debug", "false")
-configuration.set("api", "log_file", "")
-configuration.set(
-    "api", "log_format", DEFAULT_LOG_FORMAT.replace("%", "%%")
 )
 
 
