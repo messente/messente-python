@@ -47,7 +47,7 @@ class Logger(object):
         log_file = kwargs.pop("log_file", None)
         if log_file:
             d = os.path.dirname(log_file)
-            if not os.path.isdir(d):
+            if d and not os.path.isdir(d):
                 os.makedirs(d)
             handlers.append(logging.FileHandler(log_file))
 
