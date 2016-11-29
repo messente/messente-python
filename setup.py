@@ -2,10 +2,13 @@
 
 from setuptools import setup, find_packages
 
+
 setup(
     name="messente-python",
-    version="0.1",
-    packages=["messente"],
+    version="1.2.2",
+    packages=["messente", "messente.api"],
+    setup_requires=["future", "six", "requests"],
+    install_requires=["future", "six", "requests"],
     author="Messente.com",
     author_email="support@messente.com",
     description="Official Messente.com API library",
