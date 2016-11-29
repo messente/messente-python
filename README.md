@@ -40,8 +40,7 @@ You can find sample scripts in the 'examples' directory.
     import messente
 
     api = messente.Messente(username="user", password="password")
-    api.sms.send(dict(to="+XXXxxxxxxxxx", text="test"))
-
+    api.sms.send({"from": "SenderID", "to"="+XXXxxxxxxxxx", "text"="test"})
 ```
 
 More: http://messente.com/documentation/sms-messaging/sending-sms
