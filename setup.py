@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-
+from messente.constants import VERSION
 
 setup(
     name="messente-python",
-    version="1.2.5",
+    version=VERSION,
     packages=["messente", "messente.api"],
     setup_requires=["future", "six", "requests"],
     install_requires=["future", "six", "requests"],
