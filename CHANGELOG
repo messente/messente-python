@@ -1,0 +1,38 @@
+2016-11-30  Bartłomiej Kurek  <bartlomiej.kurek@messente.com>
+
+	* 1.2.4
+
+	- Added library version number
+	- Added custom user agent header
+
+2016-11-29  Bartłomiej Kurek  <bartlomiej.kurek@messente.com>
+
+	* 1.2.3
+
+	- Fixed passing data to the underlying request call
+	broken by support for backup/custom api url.
+	- Removed custom log handlers
+
+2016-11-29  Bartłomiej Kurek  <bartlomiej.kurek@messente.com>
+
+	* 1.2.2 [YANKED]
+
+	Added support for backup api url.
+
+2016-11-25  Bartłomiej Kurek  <bartlomiej.kurek@messente.com>
+
+	* 1.1.0
+
+	Release compatible with python2 and python3.
+
+
+2016-11-24  Bartłomiej Kurek  <bartlomiej.kurek@messente.com>
+
+	* 1.0.0
+
+	Initial release including APIs:
+	- sms
+	- delivery
+	- credit
+	- pricing
+	- number_verification

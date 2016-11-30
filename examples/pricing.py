@@ -4,7 +4,10 @@ import messente
 import tempfile
 import json
 
-api = messente.Messente()
+api = messente.Messente(
+    username="api_user",
+    password="api_password",
+)
 
 # Fetch prices for country
 response = api.pricing.get_country_prices("ee")

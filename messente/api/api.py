@@ -23,6 +23,7 @@ from messente.logging import Logger
 from messente.api import config
 from messente.api.error import ConfigurationError
 from messente.api.error import InvalidMessageError
+from messente.constants import VERSION
 
 
 class API(Logger):
@@ -96,13 +97,27 @@ class API(Logger):
 
             data.update(dict(password=self.get_option("password")))
 
+            headers = {
+                "User-Agent": "messente-python/%s" % str(VERSION)
+            }
+
             try:
                 r = None
                 method = method.upper()
                 if method == "GET":
-                    r = requests.get(url, params=data, allow_redirects=True)
+                    r = requests.get(
+                        url,
+                        params=data,
+                        headers=headers,
+                        allow_redirects=True
+                    )
                 elif method == "POST":
-                    r = requests.post(url, params=data, allow_redirects=True)
+                    r = requests.post(
+                        url,
+                        params=data,
+                        headers=headers,
+                        allow_redirects=True
+                    )
                 return r
             except Exception as e:
                 self.log.exception(e)

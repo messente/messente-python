@@ -3,11 +3,7 @@
 import messente
 import sys
 
-api = messente.Messente(
-    log_stdout=True,
-    log_file="/tmp/verification.log",
-    log_debug=True,
-)
+api = messente.Messente(username="api_user", password="api_password")
 
 if len(sys.argv) == 2:
     to = sys.argv[1]

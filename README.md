@@ -2,7 +2,7 @@
 
 Messente.com API library (Python2 and Python3).
 
-Full documentation: http://messente.com/documentation
+Full documentation: https://messente.com/documentation
 
 
 Modules:
@@ -43,7 +43,7 @@ You can find sample scripts in the 'examples' directory.
     api.sms.send({"from": "SenderID", "to"="+XXXxxxxxxxxx", "text"="test"})
 ```
 
-More: http://messente.com/documentation/sms-messaging/sending-sms
+More: https://messente.com/documentation/sms-messaging/sending-sms
 
 #### Advanced example
 
@@ -62,7 +62,7 @@ and cancelling a message can be demonstrated as:
         "time_to_send": int(time.time()) + 10,
     }
 
-    api = messente.Messente()
+    api = messente.Messente(username="user", password="password")
 
     (ok, errors) = api.sms.validate(sms_data)
 
@@ -87,7 +87,7 @@ and cancelling a message can be demonstrated as:
 
 ```
 
-More: http://messente.com/documentation/sms-messaging/sending-sms
+More: https://messente.com/documentation/sms-messaging/sending-sms
 
 
 ### CreditsAPI
@@ -104,7 +104,7 @@ More: http://messente.com/documentation/sms-messaging/sending-sms
 
 ```
 
-More: http://messente.com/documentation/tools/credits-api
+More: https://messente.com/documentation/tools/credits-api
 
 ### PricingAPI
 
@@ -132,7 +132,7 @@ More: http://messente.com/documentation/tools/credits-api
         print("Pricelist saved in:", filename)
 ```
 
-More: http://messente.com/documentation/tools/pricing-api
+More: https://messente.com/documentation/tools/pricing-api
 
 ### NumberVerificationAPI (pin code based verification)
 
@@ -169,7 +169,7 @@ Verifying PIN code:
     print("INVALID:\t", response.is_invalid())
 ```
 
-More: http://messente.com/documentation/number-verification/number-verification-api
+More: https://messente.com/documentation/number-verification/number-verification-api
 
 
 ## Configuration parameters
@@ -237,6 +237,7 @@ Tests:
 - responses
 - nose
 
+To install them in your development environment:
 ```
 pip install -r requirements.txt
 ```

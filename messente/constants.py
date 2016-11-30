@@ -16,6 +16,4 @@
 
 from __future__ import absolute_import, division, print_function
 
-from .messente import Messente
-from . import api
-from .constants import VERSION
+VERSION = "1.2.3"
