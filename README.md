@@ -14,10 +14,10 @@ Modules:
 
 ## Installation
 
-The library can be installed via pip:
+The library can be installed/upgraded via pip:
 
 ```
-    pip install messente-python
+    pip install --upgrade messente-python
 ```
 
 or by using setuptools:
