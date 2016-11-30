@@ -1,6 +1,6 @@
 2016-11-30  Bartłomiej Kurek  <bartlomiej.kurek@messente.com>
 
-	* 1.2.4
+	* 1.2.5
 
 	- Added library version number
 	- Added custom user agent header
