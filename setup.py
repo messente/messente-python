@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="messente-python",
-    version="1.2.4",
+    version="1.2.5",
     packages=["messente", "messente.api"],
     setup_requires=["future", "six", "requests"],
     install_requires=["future", "six", "requests"],
