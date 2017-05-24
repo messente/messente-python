@@ -28,8 +28,6 @@ configuration.add_section("api")
 configuration.add_section("sms")
 configuration.add_section("credit")
 
-
-configuration.set("api", "test", "ASD")
 configuration.set(
     "api",
     "urls",
