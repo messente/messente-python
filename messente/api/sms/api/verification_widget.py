@@ -17,7 +17,8 @@
 from __future__ import absolute_import, division, print_function
 
 import hashlib
-from messente.api import api
+
+from messente.api.sms.api import api
 
 
 class VerificationWidgetAPI(api.API):

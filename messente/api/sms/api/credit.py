@@ -16,22 +16,30 @@
 
 from __future__ import absolute_import, division, print_function
 
-import os
-from messente import api
+from messente.api.sms.api import api
+from messente.api.sms.api.response import Response
 
 
-class Messente(object):
+class CreditResponse(Response):
+    def __init__(self, *args, **kwargs):
+        Response.__init__(self, *args, **kwargs)
+
+    def get_result(self):
+        if self.is_ok():
+            return self.get_raw_text().split(" ")[1]
+        return None
+
+
+class CreditAPI(api.API):
+    """
+    Documentation:
+    http://messente.com/documentation/tools/credits-api
+    """
+
     def __init__(self, **kwargs):
-        if kwargs.get("ini_path", ""):
-            api.config.load(kwargs.pop("ini_path"))
-        # modules
-        self.sms = api.sms.SmsAPI(**kwargs)
-        self.credit = api.credit.CreditAPI(**kwargs)
-        self.delivery = api.delivery.DeliveryAPI(**kwargs)
-        self.pricing = api.pricing.PricingAPI(**kwargs)
-        self.number_verification = (
-            api.number_verification.NumberVerificationAPI(**kwargs)
-        )
-        self.verification_widget = (
-            api.verification_widget.VerificationWidgetAPI(**kwargs)
-        )
+        api.API.__init__(self, "credit", **kwargs)
+
+    def get_balance(self):
+        r = CreditResponse(self.call_api("get_balance"))
+        self.log_response(r)
+        return r

@@ -16,11 +16,9 @@
 
 from __future__ import absolute_import, division, print_function
 
-from messente.api import config
-from messente.api import api
-from messente.api.response import Response
-from messente.api.error import ERROR_CODES
-
+from messente.api.sms.api import api
+from messente.api.sms.api.error import ERROR_CODES
+from messente.api.sms.api.response import Response
 
 error_map = ERROR_CODES.copy()
 error_map.update({

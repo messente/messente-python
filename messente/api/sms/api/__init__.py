@@ -16,14 +16,13 @@
 
 from __future__ import absolute_import, division, print_function
 
-import os
-import sys
-import logging
+from messente.api.sms.api import error
+from messente.api.sms.api.response import Response
 
-
-log = logging.getLogger("messente")
-
-
-class Logger(object):
-    def __init__(self, name=None, **kwargs):
-        self.log = log.getChild((name or self.__class__.__name__))
+# api modules
+from messente.api.sms.api import sms
+from messente.api.sms.api import credit
+from messente.api.sms.api import delivery
+from messente.api.sms.api import pricing
+from messente.api.sms.api import number_verification
+from messente.api.sms.api import verification_widget

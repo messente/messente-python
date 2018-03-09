@@ -17,8 +17,8 @@
 from __future__ import absolute_import, division, print_function
 
 import os
-from messente.api.error import ConfigurationError
-from messente.logging import log
+from messente.api.sms.api.error import ConfigurationError
+from messente.api.sms.logging import log
 
 from six.moves import configparser
 

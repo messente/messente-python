@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup, find_packages
-from messente.constants import VERSION
+from setuptools import setup
+
+from messente.api.sms.constants import VERSION
 
 setup(
     name="messente-python",
     version=VERSION,
-    packages=["messente", "messente.api"],
+    packages=[
+        "messente.api.sms",
+        "messente.api.sms.api"
+    ],
     setup_requires=["future", "six", "requests"],
     install_requires=["future", "six", "requests"],
     author="Messente.com",
@@ -15,5 +19,5 @@ setup(
     license="Apache License, Version 2",
     keywords="messente sms verification 2FA pincode",
     url="http://messente.com/documentation/",
-    test_suite="test",
+    test_suite="messente.api.sms.test",
 )

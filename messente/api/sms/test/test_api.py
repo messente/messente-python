@@ -2,16 +2,14 @@
 
 import unittest
 
-from test import utils
-
-import messente
-from messente.api.config import configuration
-from messente.api import sms
-from messente.api import delivery
-from messente.api import credit
-from messente.api import pricing
-from messente.api.error import ConfigurationError
-
+from messente.api.sms.api import credit
+from messente.api.sms.api import delivery
+from messente.api.sms.api import pricing
+from messente.api.sms.api import sms
+from messente.api.sms.api.api import API
+from messente.api.sms.api.config import configuration
+from messente.api.sms.api.error import ConfigurationError
+from messente.api.sms.test import utils
 
 module_name = "test-api"
 username = "%s-username" % module_name
@@ -20,7 +18,7 @@ password = "%s-password" % module_name
 
 class TestApi(unittest.TestCase):
     def test_configuration(self):
-        api = messente.api.api.API(
+        api = API(
             username=username,
             password=password,
             config_section=module_name,

@@ -16,31 +16,11 @@
 
 from __future__ import absolute_import, division, print_function
 
-from messente.api import config
-from messente.api import api
-from messente.api.response import Response
+import logging
+
+log = logging.getLogger("messente")
 
 
-class CreditResponse(Response):
-    def __init__(self, *args, **kwargs):
-        Response.__init__(self, *args, **kwargs)
-
-    def get_result(self):
-        if self.is_ok():
-            return self.get_raw_text().split(" ")[1]
-        return None
-
-
-class CreditAPI(api.API):
-    """
-    Documentation:
-    http://messente.com/documentation/tools/credits-api
-    """
-
-    def __init__(self, **kwargs):
-        api.API.__init__(self, "credit", **kwargs)
-
-    def get_balance(self):
-        r = CreditResponse(self.call_api("get_balance"))
-        self.log_response(r)
-        return r
+class Logger(object):
+    def __init__(self, name=None, **kwargs):
+        self.log = log.getChild((name or self.__class__.__name__))

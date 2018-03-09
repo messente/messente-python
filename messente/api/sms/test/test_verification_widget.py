@@ -2,7 +2,7 @@
 
 import unittest
 import hashlib
-from messente.api import verification_widget
+from messente.api.sms.api import verification_widget
 
 
 def test_calculate_signature():

@@ -4,7 +4,7 @@ import unittest
 import time
 import tempfile
 
-from messente.api import utils
+from messente.api.sms.api import utils
 
 
 class TestUtils(unittest.TestCase):

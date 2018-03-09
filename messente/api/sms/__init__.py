@@ -16,6 +16,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-from .messente import Messente
-from . import api
-from .constants import VERSION
+from messente.api.sms import api
+from messente.api.sms.constants import VERSION
+from messente.api.sms.messente import Messente

@@ -14,12 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
 import os
 import re
+import time
 
-from messente.logging import log
-
+from messente.api.sms.logging import log
 
 PHONE_REPLACE_RE = re.compile("(\+|-|_|\.|\s)*")
 

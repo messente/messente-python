@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import unittest
 import time
-from messente.api import number_verification
+import unittest
+
+from messente.api.sms.api import number_verification
 
 
 class TestValidate(unittest.TestCase):

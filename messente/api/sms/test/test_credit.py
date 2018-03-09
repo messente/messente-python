@@ -2,12 +2,9 @@
 
 import responses
 
-from test import utils
-
-from messente.api import credit
-from messente.api import Response
-from messente.api.error import ConfigurationError
-
+from messente.api.sms.api import Response
+from messente.api.sms.api import credit
+from messente.api.sms.test import utils
 
 api = credit.CreditAPI(
     user="test",

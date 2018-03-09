@@ -2,11 +2,9 @@
 
 import responses
 
-from test import utils
-
-from messente.api import delivery
-from messente.api import Response
-
+from messente.api.sms.api import Response
+from messente.api.sms.api import delivery
+from messente.api.sms.test import utils
 
 api = delivery.DeliveryAPI(urls=utils.TEST_DLR_URL)
 

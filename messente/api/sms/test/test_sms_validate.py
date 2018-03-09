@@ -2,7 +2,7 @@
 
 import unittest
 import time
-from messente.api import sms
+from messente.api.sms.api import sms
 
 
 class TestValidate(unittest.TestCase):

@@ -16,12 +16,10 @@
 
 from __future__ import absolute_import, division, print_function
 
-
-from messente.api import api
-from messente.api import utils
-from messente.api.response import Response
-from messente.api.error import ERROR_CODES
-
+from messente.api.sms.api import api
+from messente.api.sms.api import utils
+from messente.api.sms.api.error import ERROR_CODES
+from messente.api.sms.api.response import Response
 
 error_map = ERROR_CODES.copy()
 
@@ -89,6 +87,7 @@ class NumberVerificationAPI(api.API):
     http://messente.com/documentation/number-verification/number-verification-api
 
     """
+
     def __init__(self, **kwargs):
         api.API.__init__(self, "number-verification", **kwargs)
 
@@ -143,7 +142,7 @@ class NumberVerificationAPI(api.API):
 
             retry_delay = data.get("retry_delay", None)
             if retry_delay is not None and not str(retry_delay).isdigit():
-                    self.set_error(errors, "retry_delay")
+                self.set_error(errors, "retry_delay")
 
             validity = data.get("validity", None)
             if validity is not None:
@@ -162,5 +161,5 @@ class NumberVerificationAPI(api.API):
             if not verification_id:
                 self.set_error_required(errors, "verification_id")
             elif not isinstance(verification_id, str):
-                    self.set_error(errors, "verification_id")
+                self.set_error(errors, "verification_id")
         return (not len(errors), errors)
