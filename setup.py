@@ -6,7 +6,7 @@ from messente.api.sms.constants import VERSION
 
 setup(
     name="messente-python",
-    version=VERSION,
+    version="1.2.5",
     packages=[
         "messente.api.sms",
         "messente.api.sms.api"
