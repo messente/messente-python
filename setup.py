@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-from messente.api.sms.constants import VERSION
+
 
 setup(
     name="messente-python",
