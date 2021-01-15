@@ -15,8 +15,8 @@ pip install messente-python==2.0.0
 or by using setuptools:
 
 ```
-    python setup.py build
-    python setup.py install
+python setup.py build
+python setup.py install
 ```
 
 ## Examples
@@ -61,7 +61,6 @@ The library uses logging module from standard python library, and
 logging should be configured by the application that uses this library.
 For more information, please visit:
 https://docs.python.org/3/howto/logging.html
-
 
 # LICENSE
 
