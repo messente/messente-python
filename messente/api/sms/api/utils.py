@@ -20,7 +20,7 @@ import time
 
 from messente.api.sms.logging import log
 
-PHONE_REPLACE_RE = re.compile("(\+|-|_|\.|\s)*")
+PHONE_REPLACE_RE = re.compile(r"(\+|-|_|\.|\s)*")
 
 
 def is_int(value):
