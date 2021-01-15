@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import messente
+from messente.api.sms import Messente
+from messente.api.sms.api.error import InvalidMessageError
 
 import sys
 import time
@@ -23,7 +24,7 @@ if delay:
     sms_data.update({"time_to_send": int(time.time()) + delay})
 
 # process sms
-api = messente.Messente()
+api = Messente()
 
 (ok, errors) = api.sms.validate(sms_data)
 
@@ -48,7 +49,7 @@ print("# Validation")
 try:
     # when trying to send invalid message, an exception is raised
     response = api.sms.send({})
-except messente.api.error.InvalidMessageError as e:
+except InvalidMessageError as e:
     print("Validation Error:", e)
 
 print("# Disabled validation")
