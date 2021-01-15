@@ -9,7 +9,7 @@ from messente.api.sms.api import sms
 from messente.api.sms.api.api import API
 from messente.api.sms.api.config import configuration
 from messente.api.sms.api.error import ConfigurationError
-from messente.api.sms.test import utils
+from test import utils
 
 module_name = "test-api"
 username = "%s-username" % module_name

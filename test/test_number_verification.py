@@ -4,7 +4,7 @@ import responses
 
 from messente.api.sms.api import Response
 from messente.api.sms.api import number_verification
-from messente.api.sms.test import utils
+from test import utils
 
 api = number_verification.NumberVerificationAPI(
     user="test",

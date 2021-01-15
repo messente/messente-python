@@ -7,7 +7,7 @@ import responses
 
 from messente.api.sms.api import Response
 from messente.api.sms.api import pricing
-from messente.api.sms.test import utils
+from test import utils
 
 fake_response = json.dumps({
     "country": "EE",

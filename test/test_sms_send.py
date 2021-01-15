@@ -5,7 +5,7 @@ import responses
 from messente.api.sms.api import Response
 from messente.api.sms.api import sms
 from messente.api.sms.api.error import InvalidMessageError
-from messente.api.sms.test import utils
+from test import utils
 
 
 def mk_sms_data(data=None):

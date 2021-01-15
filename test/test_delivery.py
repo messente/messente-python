@@ -4,7 +4,7 @@ import responses
 
 from messente.api.sms.api import Response
 from messente.api.sms.api import delivery
-from messente.api.sms.test import utils
+from test import utils
 
 api = delivery.DeliveryAPI(urls=utils.TEST_DLR_URL)
 
