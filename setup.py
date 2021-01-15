@@ -11,6 +11,9 @@ with open("requirements.txt") as prod_requirements_file:
         VERSION_PATTERN, prod_requirements_file.read()
     )
 
+with open('README.md') as readme_file:
+    LONG_DESCRIPTION = readme_file.read()
+
 setup(
     name="messente-python",
     version="2.0.0",
@@ -24,4 +27,6 @@ setup(
     url="http://messente.com/documentation/",
     test_suite="messente.api.sms.test",
     python_requires="==3.6.*",
+    long_description=LONG_DESCRIPTION,
+    long_description_content_type='text/markdown'
 )
