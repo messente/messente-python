@@ -13,7 +13,7 @@ with open("requirements.txt") as prod_requirements_file:
 
 setup(
     name="messente-python",
-    version="1.2.5",
+    version="2.0.0",
     packages=["messente.api.sms", "messente.api.sms.api"],
     install_requires=PROD_REQUIREMENTS,
     author="Messente.com",
