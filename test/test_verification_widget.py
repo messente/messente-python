@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import unittest
 import hashlib
 from messente.api.sms.api import verification_widget
 

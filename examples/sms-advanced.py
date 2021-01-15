@@ -2,9 +2,7 @@
 
 import messente
 
-import os
 import sys
-import logging
 import time
 
 # process input parameters

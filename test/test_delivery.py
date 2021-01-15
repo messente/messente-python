@@ -36,5 +36,5 @@ def test_dlr_failed():
     r = api.get_dlr_response("smsid")
     assert isinstance(r, Response)
     assert isinstance(r, delivery.DeliveryResponse)
-    assert r.get_result() is ""
+    assert r.get_result() == ""
     assert not r.is_ok()

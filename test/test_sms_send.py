@@ -56,7 +56,7 @@ def test_send_invalid():
     api = sms.SmsAPI(urls=utils.TEST_URL)
     raised = False
     try:
-        r = api.send({})
+        api.send({})
     except InvalidMessageError:
         raised = True
     assert raised
@@ -72,7 +72,7 @@ def test_send_no_validate():
     )
 
     api = sms.SmsAPI(urls=utils.TEST_URL)
-    r = api.send({}, validate=False)
+    api.send({}, validate=False)
     # OK if no exception was raised
     assert True
 
