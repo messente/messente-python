@@ -19,3 +19,6 @@ from __future__ import absolute_import, division, print_function
 from messente.api.sms import api
 from messente.api.sms.constants import VERSION
 from messente.api.sms.messente import Messente
+
+
+__all__ = ["api", "VERSION", "Messente"]
