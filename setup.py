@@ -26,7 +26,7 @@ setup(
     keywords="messente sms verification 2FA pincode",
     url="http://messente.com/documentation/",
     test_suite="messente.api.sms.test",
-    python_requires="==3.6.*",
+    python_requires="~=3.6",
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown'
 )
