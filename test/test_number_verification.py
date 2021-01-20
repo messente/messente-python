@@ -2,12 +2,9 @@
 
 import responses
 
+from messente.api.sms.api import Response
+from messente.api.sms.api import number_verification
 from test import utils
-
-from messente.api import number_verification
-from messente.api import Response
-from messente.api.error import ConfigurationError
-
 
 api = number_verification.NumberVerificationAPI(
     user="test",

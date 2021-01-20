@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import messente
+from messente.api.sms import Messente
 
-api = messente.Messente(username="user", password="password")
+api = Messente(username="user", password="password")
 api.sms.send(dict(to="+XXXxxxxxxxxx", text="test"))

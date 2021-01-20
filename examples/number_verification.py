@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import messente
+from messente.api.sms import Messente
 import sys
 
-api = messente.Messente(username="api_user", password="api_password")
+api = Messente(username="api_user", password="api_password")
 
 if len(sys.argv) == 2:
     to = sys.argv[1]

@@ -2,11 +2,9 @@
 
 import responses
 
+from messente.api.sms.api import Response
+from messente.api.sms.api import delivery
 from test import utils
-
-from messente.api import delivery
-from messente.api import Response
-
 
 api = delivery.DeliveryAPI(urls=utils.TEST_DLR_URL)
 
@@ -38,5 +36,5 @@ def test_dlr_failed():
     r = api.get_dlr_response("smsid")
     assert isinstance(r, Response)
     assert isinstance(r, delivery.DeliveryResponse)
-    assert r.get_result() is ""
+    assert r.get_result() == ""
     assert not r.is_ok()

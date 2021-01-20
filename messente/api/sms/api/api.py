@@ -19,11 +19,11 @@ from __future__ import absolute_import, division, print_function
 import os
 import requests
 
-from messente.logging import Logger
-from messente.api import config
-from messente.api.error import ConfigurationError
-from messente.api.error import InvalidMessageError
-from messente.constants import VERSION
+from messente.api.sms.logging import Logger
+from messente.api.sms.api import config
+from messente.api.sms.api.error import ConfigurationError
+from messente.api.sms.api.error import InvalidMessageError
+from messente.api.sms.constants import VERSION
 
 
 class API(Logger):

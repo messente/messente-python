@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import messente
+from messente.api.sms import Messente
 import tempfile
 import json
 
-api = messente.Messente(
+api = Messente(
     username="api_user",
     password="api_password",
 )

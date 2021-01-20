@@ -16,4 +16,24 @@
 
 from __future__ import absolute_import, division, print_function
 
-VERSION = "1.2.5"
+from messente.api.sms.api import error
+from messente.api.sms.api.response import Response
+
+# api modules
+from messente.api.sms.api import sms
+from messente.api.sms.api import credit
+from messente.api.sms.api import delivery
+from messente.api.sms.api import pricing
+from messente.api.sms.api import number_verification
+from messente.api.sms.api import verification_widget
+
+__all__ = [
+    "error",
+    "Response",
+    "sms",
+    "credit",
+    "delivery",
+    "pricing",
+    "number_verification",
+    "verification_widget",
+]

@@ -15,14 +15,13 @@
 # limitations under the License.
 
 from __future__ import absolute_import, division, print_function
-from builtins import (bytes, str, open, super, range,
-                      zip, round, input, int, pow, object)
 
-from messente.api import api
-from messente.api import utils
-from messente.api.response import Response
-from messente.api.error import ERROR_CODES
+from builtins import (str, super, int)
 
+from messente.api.sms.api import api
+from messente.api.sms.api import utils
+from messente.api.sms.api.error import ERROR_CODES
+from messente.api.sms.api.response import Response
 
 sms_error_map = ERROR_CODES.copy()
 sms_error_map.update({

@@ -16,7 +16,7 @@
 
 from __future__ import absolute_import, division, print_function
 
-from messente.api.error import ERROR_CODES
+from messente.api.sms.api.error import ERROR_CODES
 
 
 class Response(object):
