@@ -9,7 +9,7 @@ Full documentation: <https://messente.com/documentation>
 The library can be installed/upgraded via pip:
 
 ```
-pip install messente-python==2.0.0
+pip install messente-python==2.0.1
 ```
 
 or by using setuptools:
