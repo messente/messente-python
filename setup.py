@@ -16,7 +16,7 @@ with open('README.md') as readme_file:
 
 setup(
     name="messente-python",
-    version="2.0.0",
+    version="2.0.1",
     packages=["messente.api.sms", "messente.api.sms.api"],
     install_requires=PROD_REQUIREMENTS,
     author="Messente.com",
