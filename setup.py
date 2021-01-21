@@ -16,7 +16,7 @@ with open('README.md') as readme_file:
 
 setup(
     name="messente-python",
-    version="2.0.0",
+    version="2.0.1",
     packages=["messente.api.sms", "messente.api.sms.api"],
     install_requires=PROD_REQUIREMENTS,
     author="Messente.com",
@@ -26,7 +26,7 @@ setup(
     keywords="messente sms verification 2FA pincode",
     url="http://messente.com/documentation/",
     test_suite="messente.api.sms.test",
-    python_requires="==3.6.*",
+    python_requires="~=3.6",
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown'
 )

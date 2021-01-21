@@ -1,6 +1,6 @@
 # messente-python
 
-Messente SMS API library for Python 3.6.
+Messente SMS API library for Python 3.6+.
 
 Full documentation: <https://messente.com/documentation>
 
@@ -9,7 +9,7 @@ Full documentation: <https://messente.com/documentation>
 The library can be installed/upgraded via pip:
 
 ```
-pip install messente-python==2.0.0
+pip install messente-python==2.0.1
 ```
 
 or by using setuptools:
@@ -39,8 +39,8 @@ Configuration can be stored in a *.ini file (please see config.sample.ini).
 The path to the file can be passed to a contructor as "ini_path" keyword argument:
 
 ```python
-    import messente
-    api = messente.Messente(ini_path="some/path/filename.ini")
+from messente.api.sms import Messente
+api = messente.Messente(ini_path="some/path/filename.ini")
 ```
 
 Configuration file is divided into following sections:
