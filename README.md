@@ -1,6 +1,6 @@
 # messente-python
 
-Messente SMS API library for Python 3.6 and up but not Python 4.
+Messente SMS API library for Python 3.6+.
 
 Full documentation: <https://messente.com/documentation>
 
